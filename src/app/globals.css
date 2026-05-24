@@ -1,26 +1,274 @@
 @import "tailwindcss";
 
+/* =========================================================
+   SocialRouter Design Tokens (Linear-inspired dark theme)
+   ========================================================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand palette - lifted from 官网色.png */
+  --sr-red:      #cc0a0d;
+  --sr-red-soft: #e53e41;
+  --sr-orange:   #f87f23;
+  --sr-cream:    #f0dfcb;
+  --sr-bg:       #0a0606;
+  --sr-bg-2:     #120a08;
+  --sr-bg-3:     #1a0f0c;
+  --sr-line:     rgba(255, 255, 255, 0.08);
+  --sr-line-2:   rgba(255, 255, 255, 0.14);
+  --sr-text:     #f5ece2;
+  --sr-text-2:   #c8bdb0;
+  --sr-muted:    #8a8079;
+
+  --background: var(--sr-bg);
+  --foreground: var(--sr-text);
+
+  /* Linear-style scrollbar */
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-sr-red:     var(--sr-red);
+  --color-sr-red-2:   var(--sr-red-soft);
+  --color-sr-orange:  var(--sr-orange);
+  --color-sr-cream:   var(--sr-cream);
+  --color-sr-bg:      var(--sr-bg);
+  --color-sr-bg-2:    var(--sr-bg-2);
+  --color-sr-bg-3:    var(--sr-bg-3);
+  --color-sr-line:    var(--sr-line);
+  --color-sr-line-2:  var(--sr-line-2);
+  --color-sr-text:    var(--sr-text);
+  --color-sr-text-2:  var(--sr-text-2);
+  --color-sr-muted:   var(--sr-muted);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  background: var(--sr-bg);
+  color: var(--sr-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+html {
+  /* Anchor scrolling offsets the fixed navbar */
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100svh;
 }
+
+/* Ambient color wash lives in a fixed pseudo-layer so it doesn't fight
+   mobile Safari's `background-attachment: fixed` quirks. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(248, 127, 35, 0.16), transparent 60%),
+    radial-gradient(900px 600px at 0% 0%, rgba(204, 10, 13, 0.20), transparent 60%),
+    radial-gradient(900px 500px at 50% 110%, rgba(204, 10, 13, 0.10), transparent 60%);
+}
+
+/* Selection */
+::selection {
+  background: rgba(248, 127, 35, 0.35);
+  color: #fff;
+}
+
+/* Scrollbar — slim Linear-style */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.16); background-clip: padding-box; border: 2px solid transparent; }
+
+/* =========================================================
+   Utility classes (Linear-style atmospheric components)
+   ========================================================= */
+
+/* Subtle grid background overlay */
+.sr-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, #000 30%, transparent 75%);
+}
+
+.sr-grid-tight {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Subtle noise texture */
+.sr-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.85'/></svg>");
+}
+
+/* Gradient text (red→orange→cream) */
+.sr-gradient-text {
+  background: linear-gradient(120deg, #fff 0%, #f0dfcb 40%, #f87f23 75%, #cc0a0d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sr-gradient-text-warm {
+  background: linear-gradient(135deg, #ffd9b8 0%, #f87f23 50%, #cc0a0d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Glass panel - frosted dark card */
+.sr-glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 100%);
+  border: 1px solid var(--sr-line);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+.sr-glass-strong {
+  background: rgba(10, 6, 6, 0.6);
+  border: 1px solid var(--sr-line-2);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+}
+
+/* Subtle inner highlight on top edge (Linear hallmark) */
+.sr-highlight-top {
+  position: relative;
+}
+.sr-highlight-top::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 100%
+  );
+}
+
+/* Glow halo (warm) */
+.sr-glow-warm {
+  box-shadow:
+    0 0 0 1px var(--sr-line-2),
+    0 8px 30px -10px rgba(248, 127, 35, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* Button neon (red CTA) */
+.sr-btn-primary {
+  background: linear-gradient(135deg, #f87f23 0%, #cc0a0d 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 10px 30px -10px rgba(204, 10, 13, 0.7);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sr-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 16px 40px -10px rgba(204, 10, 13, 0.85);
+}
+
+.sr-btn-ghost {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--sr-line-2);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sr-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Aurora layer — animated radial glow */
+@keyframes sr-aurora {
+  0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: 0.85; }
+  50%      { transform: translate3d(2%, -2%, 0) scale(1.05); opacity: 1; }
+}
+.sr-aurora {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 30% at 30% 35%, rgba(204, 10, 13, 0.45), transparent 60%),
+    radial-gradient(35% 30% at 70% 30%, rgba(248, 127, 35, 0.40), transparent 60%),
+    radial-gradient(50% 35% at 50% 80%, rgba(204, 10, 13, 0.22), transparent 60%);
+  filter: blur(80px) saturate(140%);
+  animation: sr-aurora 14s ease-in-out infinite;
+}
+
+/* Marquee for logos strip */
+@keyframes sr-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.sr-marquee {
+  animation: sr-marquee 38s linear infinite;
+  will-change: transform;
+}
+.sr-marquee:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-marquee { animation: none; }
+}
+
+/* Pulse for "live" dot */
+@keyframes sr-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(248, 127, 35, 0.55); }
+  50%      { box-shadow: 0 0 0 8px rgba(248, 127, 35, 0); }
+}
+.sr-pulse { animation: sr-pulse 1.8s ease-in-out infinite; }
+
+/* Floating, idle bob */
+@keyframes sr-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.sr-bob { animation: sr-bob 4.5s ease-in-out infinite; }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid rgba(248, 127, 35, 0.75);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Disable text inflation on iOS landscape */
+html { -webkit-text-size-adjust: 100%; }
