@@ -1,28 +1,35 @@
 @import "tailwindcss";
 
 /* =========================================================
-   SocialRouter Design Tokens (Linear-inspired dark theme)
+   SocialRouter Design Tokens — B2B Light Theme
+   配色策略：暖白底 + 暖黑正文 + 米色分区 + 红/橙仅做点缀强调
+   参考：Stripe / Linear / Vercel / Anthropic
    ========================================================= */
 :root {
-  /* Brand palette - lifted from 官网色.png */
+  /* 品牌原色 — 仅用于强调，不再做背景 */
   --sr-red:      #cc0a0d;
   --sr-red-soft: #e53e41;
   --sr-orange:   #f87f23;
   --sr-cream:    #f0dfcb;
-  --sr-bg:       #0a0606;
-  --sr-bg-2:     #120a08;
-  --sr-bg-3:     #1a0f0c;
-  --sr-line:     rgba(255, 255, 255, 0.08);
-  --sr-line-2:   rgba(255, 255, 255, 0.14);
-  --sr-text:     #f5ece2;
-  --sr-text-2:   #c8bdb0;
-  --sr-muted:    #8a8079;
+
+  /* 浅色背景体系（暖白 / 纯白 / 米色三层） */
+  --sr-bg:       #faf7f2;            /* 主背景：暖白象牙 */
+  --sr-bg-2:     #ffffff;            /* 卡片背景：纯白 */
+  --sr-bg-3:     #f0dfcb;            /* section 分隔 / 强调底：米色（你色板原色） */
+
+  /* 边框（暖黑透明） */
+  --sr-line:     rgba(33, 19, 15, 0.08);
+  --sr-line-2:   rgba(33, 19, 15, 0.14);
+
+  /* 文字 */
+  --sr-text:     #21130f;            /* 暖黑（你色板里的 #21130F） */
+  --sr-text-2:   #4f3f37;
+  --sr-muted:    #8a7a72;
 
   --background: var(--sr-bg);
   --foreground: var(--sr-text);
 
-  /* Linear-style scrollbar */
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -63,7 +70,6 @@ body {
 }
 
 html {
-  /* Anchor scrolling offsets the fixed navbar */
   scroll-padding-top: 5rem;
 }
 
@@ -71,101 +77,67 @@ body {
   min-height: 100svh;
 }
 
-/* Ambient color wash lives in a fixed pseudo-layer so it doesn't fight
-   mobile Safari's `background-attachment: fixed` quirks. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    radial-gradient(1200px 600px at 80% -10%, rgba(248, 127, 35, 0.16), transparent 60%),
-    radial-gradient(900px 600px at 0% 0%, rgba(204, 10, 13, 0.20), transparent 60%),
-    radial-gradient(900px 500px at 50% 110%, rgba(204, 10, 13, 0.10), transparent 60%);
-}
-
-/* Selection */
+/* 选区颜色：浅红，避免触动太强 */
 ::selection {
-  background: rgba(248, 127, 35, 0.35);
-  color: #fff;
+  background: rgba(204, 10, 13, 0.18);
+  color: var(--sr-text);
 }
 
-/* Scrollbar — slim Linear-style */
+/* 浅色 scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(33, 19, 15, 0.12);
   border-radius: 8px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.16); background-clip: padding-box; border: 2px solid transparent; }
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(33, 19, 15, 0.22);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
 
 /* =========================================================
-   Utility classes (Linear-style atmospheric components)
+   Utility classes — 极简版
+   保留 marquee / pulse / 网格（淡化）/ 玻璃（浅版）
+   删除：aurora / noise / 渐变文字 / 暖色光晕 / 浮动 bob
    ========================================================= */
 
-/* Subtle grid background overlay */
+/* 极淡网格（仅在需要时局部使用，全局不再开） */
 .sr-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(33, 19, 15, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 19, 15, 0.045) 1px, transparent 1px);
   background-size: 56px 56px;
   background-position: -1px -1px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, #000 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 20%, transparent 70%);
 }
 
 .sr-grid-tight {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(33, 19, 15, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 19, 15, 0.05) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* Subtle noise texture */
-.sr-noise::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.85'/></svg>");
-}
-
-/* Gradient text (red→orange→cream) */
-.sr-gradient-text {
-  background: linear-gradient(120deg, #fff 0%, #f0dfcb 40%, #f87f23 75%, #cc0a0d 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.sr-gradient-text-warm {
-  background: linear-gradient(135deg, #ffd9b8 0%, #f87f23 50%, #cc0a0d 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Glass panel - frosted dark card */
+/* 浅色玻璃（navbar 用） */
 .sr-glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 100%);
+  background: rgba(255, 255, 255, 0.65);
   border: 1px solid var(--sr-line);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
 }
 
 .sr-glass-strong {
-  background: rgba(10, 6, 6, 0.6);
+  background: rgba(255, 255, 255, 0.88);
   border: 1px solid var(--sr-line-2);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
 }
 
-/* Subtle inner highlight on top edge (Linear hallmark) */
+/* 顶边高光（在浅底下变成顶边的暖红细线，仅强调区使用） */
 .sr-highlight-top {
   position: relative;
 }
@@ -177,64 +149,58 @@ body::before {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.18) 50%,
+    rgba(204, 10, 13, 0.28) 50%,
     transparent 100%
   );
 }
 
-/* Glow halo (warm) */
-.sr-glow-warm {
-  box-shadow:
-    0 0 0 1px var(--sr-line-2),
-    0 8px 30px -10px rgba(248, 127, 35, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+/* "渐变文字" → B2B 浅色版：单色纯文，仅作向后兼容
+   （之前所有组件用 sr-gradient-text 渲染标题，移除会全部变透明） */
+.sr-gradient-text {
+  color: var(--sr-text);
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
 }
 
-/* Button neon (red CTA) */
+/* 暖色强调文字（如 KPI / Pricing Recommended） — 单色红，不再渐变 */
+.sr-gradient-text-warm {
+  color: var(--sr-red);
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+}
+
+/* 主按钮：B2B 标准黑底白字（取代红橙渐变） */
 .sr-btn-primary {
-  background: linear-gradient(135deg, #f87f23 0%, #cc0a0d 100%);
+  background: var(--sr-text);
+  color: #ffffff;
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.30),
-    0 10px 30px -10px rgba(204, 10, 13, 0.7);
+    0 1px 2px rgba(33, 19, 15, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .sr-btn-primary:hover {
+  background: #000;
   transform: translateY(-1px);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    0 16px 40px -10px rgba(204, 10, 13, 0.85);
+    0 1px 2px rgba(33, 19, 15, 0.08),
+    0 8px 24px -6px rgba(33, 19, 15, 0.28);
 }
 
+/* 次要按钮：白底浅边 */
 .sr-btn-ghost {
-  background: rgba(255, 255, 255, 0.03);
+  background: #ffffff;
   border: 1px solid var(--sr-line-2);
+  color: var(--sr-text);
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .sr-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.22);
+  background: var(--sr-bg-3);
+  border-color: rgba(33, 19, 15, 0.22);
 }
 
-/* Aurora layer — animated radial glow */
-@keyframes sr-aurora {
-  0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: 0.85; }
-  50%      { transform: translate3d(2%, -2%, 0) scale(1.05); opacity: 1; }
-}
-.sr-aurora {
-  position: absolute;
-  inset: -20%;
-  pointer-events: none;
-  background:
-    radial-gradient(40% 30% at 30% 35%, rgba(204, 10, 13, 0.45), transparent 60%),
-    radial-gradient(35% 30% at 70% 30%, rgba(248, 127, 35, 0.40), transparent 60%),
-    radial-gradient(50% 35% at 50% 80%, rgba(204, 10, 13, 0.22), transparent 60%);
-  filter: blur(80px) saturate(140%);
-  animation: sr-aurora 14s ease-in-out infinite;
-}
-
-/* Marquee for logos strip */
+/* Marquee */
 @keyframes sr-marquee {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
@@ -249,26 +215,18 @@ body::before {
   .sr-marquee { animation: none; }
 }
 
-/* Pulse for "live" dot */
+/* "Live" dot pulse — 改为红色 */
 @keyframes sr-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(248, 127, 35, 0.55); }
-  50%      { box-shadow: 0 0 0 8px rgba(248, 127, 35, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(204, 10, 13, 0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(204, 10, 13, 0); }
 }
 .sr-pulse { animation: sr-pulse 1.8s ease-in-out infinite; }
 
-/* Floating, idle bob */
-@keyframes sr-bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-.sr-bob { animation: sr-bob 4.5s ease-in-out infinite; }
-
-/* Focus ring */
+/* Focus ring：红色 */
 :focus-visible {
-  outline: 2px solid rgba(248, 127, 35, 0.75);
+  outline: 2px solid var(--sr-red);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Disable text inflation on iOS landscape */
 html { -webkit-text-size-adjust: 100%; }

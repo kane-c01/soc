@@ -32,9 +32,9 @@ export function SectionHeader({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-sr-line-2 bg-white/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sr-text-2"
+          className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-sr-muted"
         >
-          <span className="size-1.5 rounded-full bg-sr-orange sr-pulse" />
+          <span className="h-px w-6 bg-sr-red/60" />
           {eyebrow}
         </motion.span>
       )}

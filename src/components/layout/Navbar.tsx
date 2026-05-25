@@ -65,24 +65,21 @@ export function Navbar() {
       transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        // Always have a subtle backdrop so content never bleeds under the
-        // navbar (the previous transparent-at-top state caused page content
-        // to peek through on mobile after scrolling back to the top).
         scrolled
-          ? "border-b border-sr-line bg-sr-bg/80 backdrop-blur-xl"
-          : "border-b border-sr-line/40 bg-sr-bg/40 backdrop-blur-md",
+          ? "border-b border-sr-line bg-sr-bg/85 backdrop-blur-xl"
+          : "border-b border-transparent bg-sr-bg/55 backdrop-blur-md",
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <a href="#" className="flex items-center gap-2" aria-label="SocialRouter">
+        <a href="/" className="flex items-center gap-2" aria-label="SocialRouter">
           <Logo />
         </a>
 
         <nav className="hidden items-center gap-8 lg:flex">
           {NAV.links.map((link) => (
             <a
-              key={link.id}
-              href={`#${link.id}`}
+              key={link.href}
+              href={link.href}
               className="text-sm text-sr-text-2 transition-colors hover:text-sr-text"
             >
               {link[lang]}
@@ -93,7 +90,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <button
             onClick={toggle}
-            className="hidden h-9 items-center gap-1 rounded-lg border border-sr-line-2 bg-white/[0.02] px-3 text-xs font-medium text-sr-text-2 transition hover:bg-white/[0.06] hover:text-sr-text md:inline-flex"
+            className="hidden h-9 items-center gap-1 rounded-lg border border-sr-line-2 bg-white px-3 text-xs font-medium text-sr-text-2 transition hover:bg-sr-bg-3 hover:text-sr-text md:inline-flex"
             aria-label="Toggle language"
           >
             <span className={cn(lang === "zh" && "text-sr-text")}>中</span>
@@ -101,7 +98,7 @@ export function Navbar() {
             <span className={cn(lang === "en" && "text-sr-text")}>EN</span>
           </button>
           <LinkButton
-            href="#apply"
+            href="/apply"
             variant="primary"
             size="sm"
             className="hidden md:inline-flex"
@@ -140,8 +137,8 @@ export function Navbar() {
           <Container className="flex flex-col gap-1 py-6">
             {NAV.links.map((link, i) => (
               <motion.a
-                key={link.id}
-                href={`#${link.id}`}
+                key={link.href}
+                href={link.href}
                 onClick={() => setOpen(false)}
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -161,7 +158,7 @@ export function Navbar() {
                 <span className={cn(lang === "en" && "text-sr-text")}>English</span>
               </button>
               <LinkButton
-                href="#apply"
+                href="/apply"
                 variant="primary"
                 size="md"
                 className="h-11 flex-[1.5]"

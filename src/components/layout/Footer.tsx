@@ -9,8 +9,8 @@ export function Footer() {
   const { t, lang, toggle } = useLang();
 
   return (
-    <footer className="relative mt-20 border-t border-sr-line bg-sr-bg-2/40 backdrop-blur-sm">
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-sr-orange/40 to-transparent" />
+    <footer className="relative mt-20 border-t border-sr-line bg-sr-bg-3/45">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-sr-red/30 to-transparent" />
       <Container className="grid grid-cols-1 gap-12 py-16 sm:grid-cols-2 lg:grid-cols-6">
         <div className="sm:col-span-2 lg:col-span-3">
           <Logo />
@@ -19,7 +19,7 @@ export function Footer() {
           </p>
           <button
             onClick={toggle}
-            className="mt-6 inline-flex h-9 items-center gap-1 rounded-lg border border-sr-line-2 bg-white/[0.02] px-3 text-xs font-medium text-sr-text-2 transition hover:bg-white/[0.06] hover:text-sr-text"
+            className="mt-6 inline-flex h-9 items-center gap-1 rounded-lg border border-sr-line-2 bg-white px-3 text-xs font-medium text-sr-text-2 transition hover:bg-sr-bg-3 hover:text-sr-text"
             aria-label="Toggle language"
           >
             <span className={lang === "zh" ? "text-sr-text" : ""}>中文</span>
@@ -35,9 +35,9 @@ export function Footer() {
             </h4>
             <ul className="mt-4 space-y-3">
               {g.links.map((link, i) => (
-                <li key={`${link.id}-${i}`}>
+                <li key={`${link.href}-${i}`}>
                   <a
-                    href={`#${link.id}`}
+                    href={link.href}
                     className="text-sm text-sr-text-2 transition-colors hover:text-sr-text"
                   >
                     {t(link)}

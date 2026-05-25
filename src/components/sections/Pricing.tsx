@@ -1,14 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { LinkButton } from "@/components/ui/Button";
-import { PRICING, NAV } from "@/lib/content";
+import { PRICING } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
+/**
+ * Pricing — 3 档（Pilot · Growth · Enterprise）
+ *
+ * 视觉策略：
+ * - 普通档：白底 + 浅边 + 轻阴影
+ * - 推荐档（Growth）：黑底白字 + 红色 accent — 与浅色页面形成反差
+ * - 企业档：白底 + 米色填充按钮，CTA 走 mailto，区分销售路径
+ */
 export function Pricing() {
   const { t } = useLang();
 
@@ -17,84 +25,112 @@ export function Pricing() {
       <Container>
         <SectionHeader
           eyebrow={t(PRICING.eyebrow)}
-          title={<span className="sr-gradient-text">{t(PRICING.heading)}</span>}
+          title={t(PRICING.heading)}
           sub={t(PRICING.sub)}
         />
 
-        <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-2">
-          {PRICING.plans.map((plan, i) => (
-            <motion.article
-              key={i}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.55, delay: i * 0.07 }}
-              className={cn(
-                "relative flex flex-col overflow-hidden rounded-2xl p-7 sm:p-8",
-                plan.highlight
-                  ? "border border-sr-line-2 bg-gradient-to-b from-sr-bg-3 to-sr-bg-2 shadow-[0_30px_80px_-30px_rgba(204,10,13,0.45)]"
-                  : "border border-sr-line bg-sr-bg-2",
-              )}
-            >
-              {plan.highlight && (
-                <>
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute -top-32 -right-16 size-72 rounded-full bg-gradient-to-br from-sr-orange/25 to-sr-red/30 blur-3xl"
-                  />
-                  <div
-                    aria-hidden
-                    className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sr-orange to-transparent"
-                  />
-                  <span className="absolute right-6 top-6 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-sr-orange to-sr-red px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
-                    <Sparkles className="size-3" />
-                    Recommended
+        <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-3">
+          {PRICING.plans.map((plan, i) => {
+            const isDark = plan.highlight;
+            return (
+              <motion.article
+                key={i}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.55, delay: i * 0.07 }}
+                className={cn(
+                  "relative flex flex-col rounded-2xl p-7 sm:p-8",
+                  isDark
+                    ? "border border-sr-text bg-sr-text text-white shadow-lg"
+                    : "border border-sr-line bg-white shadow-sm",
+                )}
+              >
+                {isDark && plan.recommendedLabel && (
+                  <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center rounded-full bg-sr-red px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white shadow-sm">
+                    {t(plan.recommendedLabel)}
                   </span>
-                </>
-              )}
+                )}
 
-              <h3 className="text-2xl font-semibold tracking-tight text-sr-text">
-                {t(plan.name)}
-              </h3>
-              <p className="mt-1 text-sm text-sr-text-2">{t(plan.tagline)}</p>
-
-              <div className="mt-5 inline-flex w-fit items-center gap-2 rounded-lg border border-sr-line-2 bg-white/[0.03] px-3 py-1.5 text-xs text-sr-text-2">
-                {t(plan.duration)}
-              </div>
-
-              <ul className="mt-6 space-y-3">
-                {plan.bullets.map((b, bi) => (
-                  <li key={bi} className="flex items-start gap-2.5 text-sm text-sr-text">
-                    <span
-                      className={cn(
-                        "mt-0.5 grid size-4.5 shrink-0 place-items-center rounded-full",
-                        plan.highlight
-                          ? "bg-gradient-to-br from-sr-orange to-sr-red text-white"
-                          : "border border-sr-line-2 bg-white/[0.03] text-sr-orange",
-                      )}
-                      style={{ width: 18, height: 18 }}
-                    >
-                      <Check className="size-3" />
-                    </span>
-                    <span className="text-sr-text-2">{t(b)}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-8">
-                <LinkButton
-                  href="#apply"
-                  variant={plan.highlight ? "primary" : "ghost"}
-                  size="md"
-                  className="w-full"
-                  iconRight={<ArrowRight className="size-4" />}
+                <h3
+                  className={cn(
+                    "text-2xl font-semibold tracking-tight",
+                    isDark ? "text-white" : "text-sr-text",
+                  )}
                 >
-                  {t(NAV.cta)}
-                </LinkButton>
-              </div>
-            </motion.article>
-          ))}
+                  {t(plan.name)}
+                </h3>
+                <p
+                  className={cn(
+                    "mt-1 text-sm",
+                    isDark ? "text-white/70" : "text-sr-text-2",
+                  )}
+                >
+                  {t(plan.tagline)}
+                </p>
+
+                <div
+                  className={cn(
+                    "mt-5 inline-flex w-fit items-center gap-2 rounded-lg px-3 py-1.5 text-xs",
+                    isDark
+                      ? "border border-white/15 bg-white/[0.06] text-white/85"
+                      : "border border-sr-line-2 bg-sr-bg-3/40 text-sr-text-2",
+                  )}
+                >
+                  {t(plan.duration)}
+                </div>
+
+                <ul className="mt-6 space-y-3">
+                  {plan.bullets.map((b, bi) => (
+                    <li
+                      key={bi}
+                      className={cn(
+                        "flex items-start gap-2.5 text-sm",
+                        isDark ? "text-white/90" : "text-sr-text-2",
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          "mt-0.5 grid shrink-0 place-items-center rounded-full",
+                          isDark
+                            ? "bg-sr-red text-white"
+                            : "bg-sr-bg-3 text-sr-red",
+                        )}
+                        style={{ width: 18, height: 18 }}
+                      >
+                        <Check className="size-3" />
+                      </span>
+                      <span>{t(b)}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 pt-2">
+                  <LinkButton
+                    href={plan.ctaHref}
+                    variant={isDark ? "ghost" : "primary"}
+                    size="md"
+                    className={cn(
+                      "w-full",
+                      isDark &&
+                        "border-white/25 bg-white text-sr-text hover:bg-white/90",
+                    )}
+                    iconRight={<ArrowRight className="size-4" />}
+                  >
+                    {t(plan.cta)}
+                  </LinkButton>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
+
+        <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed text-sr-muted">
+          {t({
+            zh: "所有套餐的报价都是在沟通后量身定制 — 我们不发统一报价单。",
+            en: "Every plan is custom-quoted after a discovery call — we don't send generic price lists.",
+          })}
+        </p>
       </Container>
     </section>
   );

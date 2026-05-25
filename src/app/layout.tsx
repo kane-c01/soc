@@ -54,7 +54,7 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="bg-sr-bg text-sr-text font-sans selection:bg-sr-orange/30">
+      <body className="bg-sr-bg text-sr-text font-sans selection:bg-sr-red/15 selection:text-sr-text">
         <LangProvider>{children}</LangProvider>
       </body>
     </html>

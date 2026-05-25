@@ -21,7 +21,7 @@ export function FAQ() {
           title={<span className="sr-gradient-text">{t(FAQ_DATA.heading)}</span>}
         />
 
-        <div className="mx-auto mt-12 max-w-3xl divide-y divide-sr-line rounded-2xl border border-sr-line bg-sr-bg-2 overflow-hidden">
+        <div className="mx-auto mt-12 max-w-3xl divide-y divide-sr-line rounded-2xl border border-sr-line bg-white shadow-sm overflow-hidden">
           {FAQ_DATA.items.map((item, i) => {
             const expanded = open === i;
             return (
@@ -30,7 +30,7 @@ export function FAQ() {
                   onClick={() => setOpen(expanded ? null : i)}
                   className={cn(
                     "flex w-full items-start justify-between gap-6 px-6 py-5 text-left transition-colors",
-                    expanded ? "bg-white/[0.025]" : "hover:bg-white/[0.015]",
+                    expanded ? "bg-sr-bg-3/35" : "hover:bg-sr-bg-3/20",
                   )}
                   aria-expanded={expanded}
                 >
@@ -44,8 +44,10 @@ export function FAQ() {
                   </span>
                   <span
                     className={cn(
-                      "grid size-7 shrink-0 place-items-center rounded-full border border-sr-line-2 transition-transform duration-300",
-                      expanded ? "rotate-45 bg-gradient-to-br from-sr-orange to-sr-red text-white" : "text-sr-text-2",
+                      "grid size-7 shrink-0 place-items-center rounded-full transition-all duration-300",
+                      expanded
+                        ? "rotate-45 bg-sr-text text-white"
+                        : "border border-sr-line-2 bg-white text-sr-text-2",
                     )}
                   >
                     <Plus className="size-3.5" />

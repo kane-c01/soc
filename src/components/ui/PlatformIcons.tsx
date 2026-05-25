@@ -122,19 +122,135 @@ export function DiscordIcon(p: IconProps) {
   );
 }
 
-export const PLATFORM_ICONS: Record<string, (p: IconProps) => React.JSX.Element> = {
+export function FacebookIcon(p: IconProps) {
+  return (
+    <svg {...withDefaults(p)}>
+      <path
+        d="M14 21V14h2.5l.5-3H14V9c0-.9.3-1.5 1.6-1.5H17V5c-.3 0-1.2-.1-2.2-.1-2.2 0-3.8 1.3-3.8 3.8V11H8.5v3H11v7h3z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+export function QuoraIcon(p: IconProps) {
+  return (
+    <svg {...withDefaults(p)}>
+      <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M14.5 16l2 2.5M11.5 14a2 2 0 100-4 2 2 0 000 4z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function MediumIcon(p: IconProps) {
+  return (
+    <svg {...withDefaults(p)}>
+      <circle cx="7" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+      <ellipse cx="15" cy="12" rx="1.5" ry="4" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M19 8v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ThreadsIcon(p: IconProps) {
+  return (
+    <svg {...withDefaults(p)}>
+      <path
+        d="M15.5 8.5C14.5 6.5 13 5.5 11 5.5c-3 0-5 2.5-5 6s2 6.5 5.5 6.5c2 0 3.5-1 4-2.5.4-1.4-.5-2.5-2.5-2.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+export const PLATFORM_ICONS: Record<
+  string,
+  (p: IconProps) => React.JSX.Element
+> = {
   Instagram: InstagramIcon,
   TikTok: TikTokIcon,
   YouTube: YoutubeIcon,
   Reddit: RedditIcon,
   X: XIcon,
   LinkedIn: LinkedInIcon,
+  Facebook: FacebookIcon,
   "Product Hunt": ProductHuntIcon,
   Discord: DiscordIcon,
+  Quora: QuoraIcon,
+  Medium: MediumIcon,
+  Threads: ThreadsIcon,
 };
 
-export function PlatformIcon({ name, size = 22, className }: { name: string; size?: number; className?: string }) {
+/**
+ * 国内平台的 monogram fallback
+ * - 不画 SVG，用首字符占位，保持一致的方框尺寸
+ * - 国内平台名通常是中文 2-3 个字，取首字
+ */
+const CHINESE_MONOGRAM: Record<string, string> = {
+  小红书: "红",
+  抖音: "抖",
+  B站: "B",
+  知乎: "知",
+  微博: "微",
+  微信公众号: "公",
+  微信视频号: "视",
+  快手: "快",
+  即刻: "即",
+  脉脉: "脉",
+  豆瓣: "豆",
+  虎扑: "扑",
+};
+
+export function PlatformIcon({
+  name,
+  size = 22,
+  className,
+}: {
+  name: string;
+  size?: number;
+  className?: string;
+}) {
   const Cmp = PLATFORM_ICONS[name];
-  if (!Cmp) return null;
-  return <Cmp size={size} className={className} />;
+  if (Cmp) return <Cmp size={size} className={className} />;
+
+  const ch = CHINESE_MONOGRAM[name] ?? name.charAt(0).toUpperCase();
+  const fontSize = Math.max(8, Math.round(size * 0.55));
+  return (
+    <span
+      className={className}
+      style={{
+        display: "inline-grid",
+        placeItems: "center",
+        width: size,
+        height: size,
+        borderRadius: 4,
+        background: "currentColor",
+        color: "transparent",
+        position: "relative",
+      }}
+      aria-hidden
+    >
+      <span
+        style={{
+          position: "absolute",
+          fontFamily:
+            "var(--font-mono, ui-monospace), 'SF Mono', monospace",
+          fontWeight: 700,
+          fontSize,
+          lineHeight: 1,
+          color: "var(--sr-bg, #faf7f2)",
+        }}
+      >
+        {ch}
+      </span>
+    </span>
+  );
 }

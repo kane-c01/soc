@@ -40,19 +40,19 @@ export function StickyBar() {
           transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
           className="fixed inset-x-3 bottom-4 z-40 sm:inset-x-auto sm:right-6 sm:bottom-6"
         >
-          <div className="sr-glass-strong sr-highlight-top flex items-center gap-3 rounded-2xl px-4 py-3 shadow-[0_20px_60px_-20px_rgba(204,10,13,0.6)] sm:max-w-md">
-            <span className="hidden size-9 shrink-0 place-items-center rounded-xl border border-sr-line-2 bg-gradient-to-br from-sr-orange/25 to-sr-red/25 text-sr-orange sm:grid">
+          <div className="flex items-center gap-3 rounded-2xl border border-sr-line bg-white px-4 py-3 shadow-lg sm:max-w-md">
+            <span className="hidden size-9 shrink-0 place-items-center rounded-xl bg-sr-bg-3 sm:grid">
               <span className="relative grid place-items-center">
-                <span className="size-2 rounded-full bg-sr-orange" />
-                <span className="absolute inset-0 -m-2 rounded-full bg-sr-orange/40 sr-pulse" />
+                <span className="size-2 rounded-full bg-sr-red" />
+                <span className="absolute inset-0 -m-2 rounded-full bg-sr-red/40 sr-pulse" />
               </span>
             </span>
             <p className="min-w-0 flex-1 text-[13px] leading-snug text-sr-text-2">
               {t(STICKY.text)}
             </p>
             <a
-              href="#apply"
-              className="sr-btn-primary inline-flex h-9 items-center gap-1 rounded-lg px-3 text-xs font-medium text-white whitespace-nowrap"
+              href="/apply"
+              className="sr-btn-primary inline-flex h-9 items-center gap-1 rounded-lg px-3 text-xs font-medium whitespace-nowrap"
             >
               {t(STICKY.cta)}
               <ArrowRight className="size-3.5" />
@@ -60,7 +60,7 @@ export function StickyBar() {
             <button
               onClick={() => setDismissed(true)}
               aria-label="Dismiss"
-              className="grid size-7 place-items-center rounded-md text-sr-muted transition hover:bg-white/[0.06] hover:text-sr-text"
+              className="grid size-7 place-items-center rounded-md text-sr-muted transition hover:bg-sr-bg-3 hover:text-sr-text"
             >
               <X className="size-3.5" />
             </button>
