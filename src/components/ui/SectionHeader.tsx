@@ -4,6 +4,12 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type Props = {
+  /**
+   * 可选步骤序号（如 "01" / "02"）。
+   * 当传入 step 时，eyebrow chip 内会显示 mono 序号代替默认 dot，
+   * 用于让一组连续 section 形成可感知的"路径感"（如 4 步方法论）。
+   */
+  step?: string;
   eyebrow?: string;
   title: React.ReactNode;
   sub?: React.ReactNode;
@@ -12,6 +18,7 @@ type Props = {
 };
 
 export function SectionHeader({
+  step,
   eyebrow,
   title,
   sub,
@@ -34,7 +41,16 @@ export function SectionHeader({
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-1.5 rounded-full border border-sr-red/25 bg-sr-red/[0.06] px-3 py-1 text-[12px] font-semibold tracking-tight text-sr-red"
         >
-          <span className="size-1.5 rounded-full bg-sr-red" />
+          {step ? (
+            <>
+              <span className="font-mono text-[10.5px] font-bold tracking-[0.04em]">
+                {step}
+              </span>
+              <span className="text-sr-red/40">·</span>
+            </>
+          ) : (
+            <span className="size-1.5 rounded-full bg-sr-red" />
+          )}
           {eyebrow}
         </motion.span>
       )}

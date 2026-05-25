@@ -5,10 +5,9 @@ import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { FOOTER } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 
 export function Footer() {
-  const { t, lang, toggle } = useLang();
+  const { t, lang } = useLang();
 
   return (
     <footer className="relative mt-20 border-t border-sr-line bg-sr-bg-3/45">
@@ -19,34 +18,10 @@ export function Footer() {
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-sr-text-2">
             {t(FOOTER.tagline)}
           </p>
-          <button
-            onClick={toggle}
-            className="group mt-5 inline-flex items-center gap-2 text-xs font-medium text-sr-muted transition"
-            aria-label="Toggle language"
-          >
-            <Globe className="size-3.5 text-sr-muted transition group-hover:text-sr-text-2" />
-            <span
-              className={cn(
-                "transition",
-                lang === "zh"
-                  ? "font-semibold text-sr-text"
-                  : "text-sr-muted group-hover:text-sr-text-2",
-              )}
-            >
-              中文
-            </span>
-            <span className="text-sr-line">·</span>
-            <span
-              className={cn(
-                "transition",
-                lang === "en"
-                  ? "font-semibold text-sr-text"
-                  : "text-sr-muted group-hover:text-sr-text-2",
-              )}
-            >
-              English
-            </span>
-          </button>
+          <div className="mt-5 inline-flex items-center gap-2 text-xs text-sr-muted">
+            <Globe className="size-3.5" />
+            <span>{lang === "zh" ? "中文" : "English"}</span>
+          </div>
         </div>
 
         {FOOTER.groups.map((g) => (

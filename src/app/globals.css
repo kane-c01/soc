@@ -12,6 +12,12 @@
   --sr-orange:   #f87f23;
   --sr-cream:    #f0dfcb;
 
+  /* 成功状态色 — 用于 ✓ / 通过 / 合规 等 "success" 状态
+     替代之前散用的 emerald-*，确保设计系统内闭环 */
+  --sr-success:      #047857;            /* 深绿（图标 / 文字） */
+  --sr-success-soft: #ecfdf5;            /* 极浅绿（背景） */
+  --sr-success-line: #a7f3d0;            /* 浅绿（边框） */
+
   /* 浅色背景体系（暖白 / 纯白 / 米色三层） */
   --sr-bg:       #faf7f2;            /* 主背景：暖白象牙 */
   --sr-bg-2:     #ffffff;            /* 卡片背景：纯白 */
@@ -40,6 +46,9 @@
   --color-sr-red-2:   var(--sr-red-soft);
   --color-sr-orange:  var(--sr-orange);
   --color-sr-cream:   var(--sr-cream);
+  --color-sr-success:      var(--sr-success);
+  --color-sr-success-soft: var(--sr-success-soft);
+  --color-sr-success-line: var(--sr-success-line);
   --color-sr-bg:      var(--sr-bg);
   --color-sr-bg-2:    var(--sr-bg-2);
   --color-sr-bg-3:    var(--sr-bg-3);
@@ -211,8 +220,21 @@ body {
 }
 .sr-marquee:hover { animation-play-state: paused; }
 
+/* Vertical marquee — 列内对话气泡自下而上 / 自上而下 无缝循环 */
+@keyframes sr-marquee-y {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, -50%, 0); }
+}
+.sr-marquee-y {
+  animation: sr-marquee-y var(--sr-marquee-duration, 32s) linear infinite;
+  animation-direction: var(--sr-marquee-direction, normal);
+  will-change: transform;
+}
+.sr-marquee-y:hover { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
   .sr-marquee { animation: none; }
+  .sr-marquee-y { animation: none; }
 }
 
 /* "Live" dot pulse — 改为红色 */
@@ -222,11 +244,37 @@ body {
 }
 .sr-pulse { animation: sr-pulse 1.8s ease-in-out infinite; }
 
-/* Focus ring：红色 */
+/* Focus ring：红色 outline + 柔和的 box-shadow halo
+   - outline 保证浏览器/screenreader 也能看到
+   - box-shadow 提供红色 8% 的柔和光晕，视觉更精致（B2B 标准） */
 :focus-visible {
   outline: 2px solid var(--sr-red);
   outline-offset: 2px;
   border-radius: 4px;
+  box-shadow: 0 0 0 4px rgba(204, 10, 13, 0.10);
+}
+
+/* 触感反馈：所有可点击元素的指针应该是 pointer（兜底） */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+a[href] {
+  cursor: pointer;
+}
+
+/* =========================================================
+   prefers-reduced-motion 全局兜底
+   framer-motion 已通过 <MotionConfig reducedMotion="user"> 适配
+   此处兜底所有 CSS transition / animation / 平滑滚动
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 html { -webkit-text-size-adjust: 100%; }

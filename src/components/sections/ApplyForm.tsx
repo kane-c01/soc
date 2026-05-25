@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
-import { FORM } from "@/lib/content";
+import { FORM, CONTACT } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -302,7 +302,7 @@ export function ApplyForm() {
                           {t(FORM.backHome)}
                         </LinkButton>
                         <LinkButton
-                          href="/"
+                          href={CONTACT.emailHref}
                           variant="primary"
                           size="md"
                           iconLeft={<MessageCircle className="size-4" />}

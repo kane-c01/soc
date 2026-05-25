@@ -20,11 +20,14 @@ export function ClientLogos() {
   const dup = [...CLIENT_LOGOS.logos, ...CLIENT_LOGOS.logos];
 
   return (
-    <section className="relative border-y border-sr-line bg-sr-bg-3/55 py-14 sm:py-16">
+    <section className="relative border-y border-sr-line bg-sr-bg-3/45 py-14 sm:py-16">
       <Container>
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center gap-2 text-center">
           <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-sr-muted">
             {t(CLIENT_LOGOS.eyebrow)}
+          </span>
+          <span className="text-[11.5px] leading-snug text-sr-muted/85">
+            {t(CLIENT_LOGOS.disclaimer)}
           </span>
         </div>
       </Container>
@@ -54,18 +57,20 @@ function LogoChip({
   item,
   ariaHidden,
 }: {
-  item: { name: string; logoSlug: string };
+  item: { name: string; logoSlug: string; localSrc?: string };
   ariaHidden?: boolean;
 }) {
+  /* localSrc 优先（用于 simpleicons 撤回的品牌，如 LinkedIn 404）；
+     否则走 simpleicons CDN 拿品牌色 SVG。 */
+  const src = item.localSrc ?? `https://cdn.simpleicons.org/${item.logoSlug}`;
   return (
     <li
       aria-hidden={ariaHidden}
       className="inline-flex shrink-0 items-center gap-2.5 rounded-xl border border-sr-line bg-white px-4 py-2.5 shadow-sm transition hover:border-sr-line-2 hover:bg-white"
     >
-      {/* SimpleIcons CDN 直接提供平台品牌色 SVG */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`https://cdn.simpleicons.org/${item.logoSlug}`}
+        src={src}
         alt={`${item.name} logo`}
         width={20}
         height={20}

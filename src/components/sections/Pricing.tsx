@@ -20,7 +20,7 @@ export function Pricing() {
   const { t } = useLang();
 
   return (
-    <section id="pricing" className="relative py-16 sm:py-20">
+    <section id="pricing" className="relative scroll-mt-24 py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(PRICING.eyebrow)}

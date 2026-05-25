@@ -14,25 +14,30 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-16 sm:py-20">
+    <section id="faq" className="relative scroll-mt-24 py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(FAQ_DATA.eyebrow)}
-          title={<span className="sr-gradient-text">{t(FAQ_DATA.heading)}</span>}
+          title={t(FAQ_DATA.heading)}
         />
 
         <div className="mx-auto mt-12 max-w-3xl divide-y divide-sr-line rounded-2xl border border-sr-line bg-white shadow-sm overflow-hidden">
           {FAQ_DATA.items.map((item, i) => {
             const expanded = open === i;
+            const triggerId = `faq-trigger-${i}`;
+            const panelId = `faq-panel-${i}`;
             return (
               <div key={i}>
                 <button
+                  type="button"
+                  id={triggerId}
                   onClick={() => setOpen(expanded ? null : i)}
                   className={cn(
                     "flex w-full items-start justify-between gap-6 px-6 py-5 text-left transition-colors",
                     expanded ? "bg-sr-bg-3/35" : "hover:bg-sr-bg-3/20",
                   )}
                   aria-expanded={expanded}
+                  aria-controls={panelId}
                 >
                   <span className="flex items-start gap-3">
                     <span className="mt-0.5 inline-flex shrink-0 items-center justify-center font-mono text-xs text-sr-muted">
@@ -43,6 +48,7 @@ export function FAQ() {
                     </span>
                   </span>
                   <span
+                    aria-hidden
                     className={cn(
                       "grid size-7 shrink-0 place-items-center rounded-full transition-all duration-300",
                       expanded
@@ -56,6 +62,10 @@ export function FAQ() {
                 <AnimatePresence initial={false}>
                   {expanded && (
                     <motion.div
+                      key="content"
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={triggerId}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

@@ -49,6 +49,7 @@ export function ContentDeepDive() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(true);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -56,6 +57,20 @@ export function ContentDeepDive() {
     const update = () => {
       setCanLeft(el.scrollLeft > 4);
       setCanRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+      // 当前可视区中心点对应的卡片 index
+      const center = el.scrollLeft + el.clientWidth / 2;
+      const cards = Array.from(el.querySelectorAll<HTMLElement>("[data-card]"));
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      cards.forEach((c, i) => {
+        const cCenter = c.offsetLeft + c.clientWidth / 2;
+        const d = Math.abs(cCenter - center);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i;
+        }
+      });
+      setActiveIdx(bestIdx);
     };
     update();
     el.addEventListener("scroll", update, { passive: true });
@@ -66,87 +81,136 @@ export function ContentDeepDive() {
     };
   }, []);
 
-  const scroll = (dir: -1 | 1) => {
+  const scrollByDir = (dir: -1 | 1) => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
+    const card = el.querySelector<HTMLElement>("[data-card]");
+    const step = card ? card.clientWidth + 20 : el.clientWidth * 0.85;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  };
+
+  const scrollToIdx = (idx: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const target = el.querySelectorAll<HTMLElement>("[data-card]")[idx];
+    if (!target) return;
+    el.scrollTo({
+      left: target.offsetLeft - (el.clientWidth - target.clientWidth) / 2,
+      behavior: "smooth",
+    });
   };
 
   return (
-    <section id="examples" className="relative scroll-mt-24 py-16 sm:py-20">
+    <section
+      id="examples"
+      className="relative scroll-mt-24 bg-sr-bg-3/45 py-16 sm:py-20"
+    >
       <Container>
         <SectionHeader
+          step="03"
           eyebrow={t(DEEP_DIVES.eyebrow)}
           title={t(DEEP_DIVES.heading)}
           sub={t(DEEP_DIVES.sub)}
         />
+
+        {/* 滑动控制条 — 桌面/移动都显示，左边标签 + 右边圆形翻页按钮 */}
+        <div className="mx-auto mt-10 flex max-w-6xl items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-sr-muted">
+            <span className="grid size-6 place-items-center rounded-full bg-sr-red/10 text-sr-red">
+              <span className="size-1.5 rounded-full bg-sr-red sr-pulse" />
+            </span>
+            <span>
+              {activeIdx + 1} / {CARDS.length}
+            </span>
+            <span className="text-sr-line">·</span>
+            <span className="hidden sm:inline">
+              {lang === "zh"
+                ? "5 个平台 · 横向滑动 / 拖动卡片"
+                : "5 platforms · drag to scroll"}
+            </span>
+            <span className="sm:hidden">
+              {lang === "zh" ? "左右滑动" : "Swipe"}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => scrollByDir(-1)}
+              disabled={!canLeft}
+              aria-label={lang === "zh" ? "上一张" : "Previous"}
+              className={cn(
+                "grid size-10 place-items-center rounded-full border border-sr-line bg-white text-sr-text shadow-sm transition",
+                canLeft
+                  ? "hover:border-sr-line-2 hover:bg-sr-bg-3/60 hover:text-sr-red"
+                  : "cursor-not-allowed opacity-30",
+              )}
+            >
+              <ChevronLeft className="size-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByDir(1)}
+              disabled={!canRight}
+              aria-label={lang === "zh" ? "下一张" : "Next"}
+              className={cn(
+                "grid size-10 place-items-center rounded-full border border-sr-line bg-white text-sr-text shadow-sm transition",
+                canRight
+                  ? "hover:border-sr-line-2 hover:bg-sr-bg-3/60 hover:text-sr-red"
+                  : "cursor-not-allowed opacity-30",
+              )}
+            >
+              <ChevronRight className="size-4" />
+            </button>
+          </div>
+        </div>
       </Container>
 
-      <div className="relative mt-10">
-        {/* 横向滑动容器 */}
+      <div className="relative mt-5">
+        {/* 横向滑动容器 — items-stretch 保证每张卡同高 */}
         <div
           ref={scrollRef}
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-6 pb-3 sm:px-10 lg:px-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory items-stretch gap-5 overflow-x-auto scroll-smooth px-6 pb-4 sm:px-10 lg:px-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {CARDS.map(({ key, Component }) => (
             <div
               key={key}
-              className="snap-center shrink-0 w-[88vw] max-w-[460px] sm:w-[62vw] lg:w-[440px]"
+              data-card
+              className="flex w-[86vw] max-w-[400px] shrink-0 snap-center flex-col sm:w-[58vw] lg:w-[400px]"
             >
               <Component />
             </div>
           ))}
-          {/* 右侧尾部 spacer，让最后一张能完整滚到中间 */}
           <div aria-hidden className="shrink-0 w-2" />
         </div>
 
-        {/* 左右渐变 fade — 提示还有更多 */}
+        {/* 左右渐变 fade — 露出下一张边缘，强化"还有更多"暗示 */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-sr-bg to-transparent sm:w-16"
+          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-sr-bg-3/55 to-transparent sm:w-16"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-sr-bg to-transparent sm:w-16"
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-sr-bg-3/55 to-transparent sm:w-16"
         />
-
-        {/* 左箭头 */}
-        <button
-          type="button"
-          onClick={() => scroll(-1)}
-          disabled={!canLeft}
-          aria-label={lang === "zh" ? "上一张" : "Previous"}
-          className={cn(
-            "absolute left-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full border border-sr-line bg-white text-sr-text shadow-md transition lg:grid",
-            canLeft
-              ? "opacity-100 hover:bg-sr-bg-3 hover:text-sr-red"
-              : "cursor-not-allowed opacity-30",
-          )}
-        >
-          <ChevronLeft className="size-5" />
-        </button>
-
-        {/* 右箭头 */}
-        <button
-          type="button"
-          onClick={() => scroll(1)}
-          disabled={!canRight}
-          aria-label={lang === "zh" ? "下一张" : "Next"}
-          className={cn(
-            "absolute right-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full border border-sr-line bg-white text-sr-text shadow-md transition lg:grid",
-            canRight
-              ? "opacity-100 hover:bg-sr-bg-3 hover:text-sr-red"
-              : "cursor-not-allowed opacity-30",
-          )}
-        >
-          <ChevronRight className="size-5" />
-        </button>
       </div>
 
-      {/* 移动端提示：左右滑动查看 */}
-      <p className="mt-3 text-center text-[11.5px] text-sr-muted lg:hidden">
-        {lang === "zh" ? "← 左右滑动查看更多 →" : "← Swipe to see more →"}
-      </p>
+      {/* 底部 dot 指示器 — 当前在第几张 + 点按跳转 */}
+      <div className="mx-auto mt-5 flex max-w-6xl items-center justify-center gap-2">
+        {CARDS.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => scrollToIdx(i)}
+            aria-label={lang === "zh" ? `跳到第 ${i + 1} 张` : `Go to ${i + 1}`}
+            className={cn(
+              "h-1.5 rounded-full transition-all",
+              i === activeIdx
+                ? "w-6 bg-sr-red"
+                : "w-1.5 bg-sr-line hover:bg-sr-text-2",
+            )}
+          />
+        ))}
+      </div>
     </section>
   );
 }
@@ -164,7 +228,7 @@ function InstagramCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6 }}
-      className="overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
     >
       <div className="flex items-center gap-3 px-4 py-3">
         <div className="grid size-9 place-items-center rounded-full bg-gradient-to-tr from-[#feda75] via-[#fa7e1e] via-[#d62976] to-[#962fbf] p-[2px]">
@@ -280,7 +344,7 @@ function FacebookCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: 0.08 }}
-      className="overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
     >
       <div className="border-b border-sr-line bg-sr-bg-3/40 px-4 py-2 text-[11.5px] font-medium text-sr-text-2">
         {t(fb.group)}
@@ -403,7 +467,7 @@ function TikTokCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6 }}
-      className="overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
     >
       {/* TikTok 顶部 nav bar — Following / For You / LIVE */}
       <div className="flex items-center justify-between border-b border-white/10 bg-black px-3 py-2 text-[11px] font-semibold text-white/75">
@@ -536,7 +600,7 @@ function RedditCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: 0.08 }}
-      className="overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
     >
       {/* 帖子主体 */}
       <div className="flex">
@@ -658,7 +722,7 @@ function XCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: 0.16 }}
-      className="overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
+      className="flex h-full flex-col overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
     >
       {/* 顶部头像 + handle */}
       <div className="flex items-start gap-3 px-4 pt-4">
