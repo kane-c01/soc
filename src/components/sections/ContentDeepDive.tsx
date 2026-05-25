@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
@@ -20,6 +21,8 @@ import {
   Eye,
   Repeat2,
   BarChart2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -28,38 +31,122 @@ import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
- * ContentDeepDive — 5 张平台高保真帖子 mock
+ * ContentDeepDive — 5 张平台高保真帖子示例 (横向轮播)
  *
- * 大卡（lg 占满宽度，2 行布局）：Instagram | Facebook
- * 中卡（lg 三列）：TikTok | Reddit | X
- *
- * 红色边框 + "AI 接话 · 已上线" badge 高亮我们发布的评论。
+ * 桌面：左右箭头切换；移动：触摸滑动。
+ * 边缘 fade + snap-x 让节奏整齐。
  */
+const CARDS = [
+  { key: "instagram", Component: InstagramCard },
+  { key: "facebook", Component: FacebookCard },
+  { key: "tiktok", Component: TikTokCard },
+  { key: "reddit", Component: RedditCard },
+  { key: "x", Component: XCard },
+];
+
 export function ContentDeepDive() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canLeft, setCanLeft] = useState(false);
+  const [canRight, setCanRight] = useState(true);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const update = () => {
+      setCanLeft(el.scrollLeft > 4);
+      setCanRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  const scroll = (dir: -1 | 1) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
+  };
 
   return (
-    <section id="examples" className="relative scroll-mt-24 py-24 sm:py-32">
+    <section id="examples" className="relative scroll-mt-24 py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(DEEP_DIVES.eyebrow)}
           title={t(DEEP_DIVES.heading)}
           sub={t(DEEP_DIVES.sub)}
         />
-
-        {/* Row 1：Instagram + Facebook */}
-        <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-2">
-          <InstagramCard />
-          <FacebookCard />
-        </div>
-
-        {/* Row 2：TikTok + Reddit + X */}
-        <div className="mx-auto mt-6 grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-3">
-          <TikTokCard />
-          <RedditCard />
-          <XCard />
-        </div>
       </Container>
+
+      <div className="relative mt-10">
+        {/* 横向滑动容器 */}
+        <div
+          ref={scrollRef}
+          className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-6 pb-3 sm:px-10 lg:px-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {CARDS.map(({ key, Component }) => (
+            <div
+              key={key}
+              className="snap-center shrink-0 w-[88vw] max-w-[460px] sm:w-[62vw] lg:w-[440px]"
+            >
+              <Component />
+            </div>
+          ))}
+          {/* 右侧尾部 spacer，让最后一张能完整滚到中间 */}
+          <div aria-hidden className="shrink-0 w-2" />
+        </div>
+
+        {/* 左右渐变 fade — 提示还有更多 */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-sr-bg to-transparent sm:w-16"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-sr-bg to-transparent sm:w-16"
+        />
+
+        {/* 左箭头 */}
+        <button
+          type="button"
+          onClick={() => scroll(-1)}
+          disabled={!canLeft}
+          aria-label={lang === "zh" ? "上一张" : "Previous"}
+          className={cn(
+            "absolute left-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full border border-sr-line bg-white text-sr-text shadow-md transition lg:grid",
+            canLeft
+              ? "opacity-100 hover:bg-sr-bg-3 hover:text-sr-red"
+              : "cursor-not-allowed opacity-30",
+          )}
+        >
+          <ChevronLeft className="size-5" />
+        </button>
+
+        {/* 右箭头 */}
+        <button
+          type="button"
+          onClick={() => scroll(1)}
+          disabled={!canRight}
+          aria-label={lang === "zh" ? "下一张" : "Next"}
+          className={cn(
+            "absolute right-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 place-items-center rounded-full border border-sr-line bg-white text-sr-text shadow-md transition lg:grid",
+            canRight
+              ? "opacity-100 hover:bg-sr-bg-3 hover:text-sr-red"
+              : "cursor-not-allowed opacity-30",
+          )}
+        >
+          <ChevronRight className="size-5" />
+        </button>
+      </div>
+
+      {/* 移动端提示：左右滑动查看 */}
+      <p className="mt-3 text-center text-[11.5px] text-sr-muted lg:hidden">
+        {lang === "zh" ? "← 左右滑动查看更多 →" : "← Swipe to see more →"}
+      </p>
     </section>
   );
 }
@@ -218,6 +305,17 @@ function FacebookCard() {
         {fb.caption.text}
       </p>
 
+      <div className="relative mx-4 mb-3 aspect-[16/9] overflow-hidden rounded-xl border border-sr-line bg-sr-bg-3">
+        <Image
+          src={fb.bgImage}
+          alt="AI sales copilot product preview"
+          fill
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover"
+          unoptimized
+        />
+      </div>
+
       <div className="flex items-center justify-between border-t border-sr-line px-4 py-2 text-[12px] text-sr-muted">
         <div className="flex items-center gap-1">
           <div className="flex -space-x-1">
@@ -307,46 +405,81 @@ function TikTokCard() {
       transition={{ duration: 0.6 }}
       className="overflow-hidden rounded-2xl border border-sr-line bg-white shadow-md"
     >
-      {/* 视频区 — 竖屏 9:16 */}
-      <div className="relative aspect-[9/13] w-full overflow-hidden bg-black">
+      {/* TikTok 顶部 nav bar — Following / For You / LIVE */}
+      <div className="flex items-center justify-between border-b border-white/10 bg-black px-3 py-2 text-[11px] font-semibold text-white/75">
+        <span>Following</span>
+        <span className="relative inline-flex items-center gap-1 text-white">
+          For You
+          <span className="absolute -bottom-1 left-0 right-0 h-px bg-white" />
+        </span>
+        <span>LIVE</span>
+      </div>
+
+      {/* 创作者头像 + handle + Follow */}
+      <div className="flex items-center gap-2.5 bg-black px-3 py-2.5">
+        <div className="relative shrink-0">
+          <div className="grid size-9 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#fe2c55] to-[#25f4ee]">
+            <span className="text-[10px] font-bold text-white">CA</span>
+          </div>
+          <span className="absolute -bottom-1 left-1/2 grid size-3.5 -translate-x-1/2 place-items-center rounded-full bg-[#fe2c55]">
+            <Plus className="size-2 text-white" />
+          </span>
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="truncate text-[12.5px] font-semibold text-white">
+            {tt.handle}
+          </div>
+          <div className="truncate text-[10.5px] text-white/60">
+            {t(tt.handleSub)}
+          </div>
+        </div>
+        <span className="rounded-md border border-white/25 px-2 py-0.5 text-[10.5px] font-semibold text-white">
+          Follow
+        </span>
+      </div>
+
+      {/* caption 文字 */}
+      <p className="bg-black px-3 pb-2 text-[12.5px] leading-snug text-white">
+        {tt.caption.text}
+      </p>
+
+      {/* 产品截图区（图文帖 image-post 模式，16:10 横屏完整展示 AI 工具产品 UI） */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden border-y border-white/10 bg-black">
         <Image
           src={tt.bgImage}
-          alt="TikTok video"
+          alt="AI script kit · product screenshot"
           fill
           sizes="(min-width: 1024px) 33vw, 100vw"
-          className="object-cover opacity-80"
+          className="object-cover"
           unoptimized
         />
-        {/* 顶部品牌标 + 时间 */}
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between px-3 pt-3 text-[11px] font-semibold text-white/90">
-          <span>Following</span>
-          <span className="text-white">For You</span>
-          <span>LIVE</span>
+        {/* 右上角：图文帖 1/1 标识 */}
+        <span className="absolute right-2.5 top-2.5 rounded-md bg-black/55 px-1.5 py-0.5 text-[10px] font-semibold text-white backdrop-blur-sm">
+          1 / 1
+        </span>
+        {/* 底部 music 行 */}
+        <div className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 bg-gradient-to-t from-black/65 to-transparent px-3 pb-2 pt-6 text-[10.5px] text-white/95">
+          <Music2 className="size-3" /> {tt.music}
         </div>
+      </div>
 
-        {/* 右侧 icon stack */}
-        <div className="absolute bottom-4 right-2 flex flex-col items-center gap-3 text-white">
-          <div className="relative">
-            <div className="grid size-10 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#fe2c55] to-[#25f4ee]">
-              <span className="text-[10px] font-bold text-white">CA</span>
-            </div>
-            <span className="absolute -bottom-1.5 left-1/2 grid size-4 -translate-x-1/2 place-items-center rounded-full bg-[#fe2c55]">
-              <Plus className="size-2.5 text-white" />
-            </span>
-          </div>
-          <Stat icon={<Heart className="size-7 fill-white text-white" />} v={tt.stats.likes} />
-          <Stat icon={<MessageCircle className="size-7 fill-white text-white" />} v={tt.stats.comments} />
-          <Stat icon={<Bookmark className="size-7 fill-white text-white" />} v={tt.stats.saves} />
-          <Stat icon={<Share2 className="size-7 text-white" />} v={tt.stats.shares} />
+      {/* 底部互动 stats 行（heart / comment / bookmark / share） */}
+      <div className="flex items-center justify-between gap-3 bg-black px-3 py-2.5 text-white">
+        <div className="inline-flex items-center gap-1.5">
+          <Heart className="size-5 fill-white text-white" />
+          <span className="text-[12px] font-semibold">{tt.stats.likes}</span>
         </div>
-
-        {/* 左下文字 */}
-        <div className="absolute inset-x-0 bottom-0 px-3 pb-4 pr-16 text-white">
-          <div className="text-[13px] font-semibold">{tt.handle}</div>
-          <div className="mt-1 text-[12px] leading-snug text-white/95">{tt.caption.text}</div>
-          <div className="mt-2 flex items-center gap-1.5 text-[11px] text-white/85">
-            <Music2 className="size-3" /> {tt.music}
-          </div>
+        <div className="inline-flex items-center gap-1.5">
+          <MessageCircle className="size-5 fill-white text-white" />
+          <span className="text-[12px] font-semibold">{tt.stats.comments}</span>
+        </div>
+        <div className="inline-flex items-center gap-1.5">
+          <Bookmark className="size-5 fill-white text-white" />
+          <span className="text-[12px] font-semibold">{tt.stats.saves}</span>
+        </div>
+        <div className="inline-flex items-center gap-1.5">
+          <Share2 className="size-5 text-white" />
+          <span className="text-[12px] font-semibold">{tt.stats.shares}</span>
         </div>
       </div>
 
@@ -387,15 +520,6 @@ function TikTokCard() {
         })}
       </div>
     </motion.div>
-  );
-}
-
-function Stat({ icon, v }: { icon: React.ReactNode; v: string }) {
-  return (
-    <div className="flex flex-col items-center gap-0.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-      {icon}
-      <span className="text-[10.5px] font-semibold">{v}</span>
-    </div>
   );
 }
 
@@ -444,6 +568,20 @@ function RedditCard() {
             {r.body}
           </p>
 
+          {/* 帖子贴图 — Reddit 上常见的产品 screenshot */}
+          {r.bgImage && (
+            <div className="relative mt-3 aspect-[16/9] w-full overflow-hidden rounded-md border border-sr-line bg-sr-bg-3">
+              <Image
+                src={r.bgImage}
+                alt="Reddit post preview"
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+          )}
+
           {/* 底部 toolbar */}
           <div className="mt-3 flex items-center gap-4 text-[11px] font-semibold text-sr-muted">
             <span className="inline-flex items-center gap-1">
@@ -485,7 +623,7 @@ function RedditCard() {
                   <span className="text-sr-muted">· {t(c.time)}</span>
                   <span className="text-sr-muted">· {c.score} points</span>
                 </div>
-                <p className="mt-1 text-[12.5px] leading-relaxed text-sr-text-2">
+                <p className="mt-1 whitespace-pre-line text-[12.5px] leading-relaxed text-sr-text-2">
                   {c.text}
                 </p>
                 <div className="mt-1 flex items-center gap-3 text-[10.5px] font-semibold text-sr-muted">

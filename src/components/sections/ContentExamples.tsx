@@ -28,7 +28,7 @@ export function ContentExamples() {
   ].filter(Boolean) as Card[];
 
   return (
-    <section id="examples" className="relative scroll-mt-24 py-24 sm:py-32">
+    <section id="examples" className="relative scroll-mt-24 py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(CONTENT_EXAMPLES.eyebrow)}

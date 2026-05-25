@@ -16,7 +16,7 @@ export function Results() {
   const title = t(RESULTS.heading);
 
   return (
-    <section id="results" className="relative scroll-mt-24 py-24 sm:py-32">
+    <section id="results" className="relative scroll-mt-24 py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(RESULTS.eyebrow)}
@@ -40,19 +40,19 @@ export function Results() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: i * 0.06 }}
-              className="relative overflow-hidden rounded-2xl border border-sr-line bg-white px-5 py-8 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+              className="relative overflow-hidden rounded-2xl border border-sr-line bg-white px-4 py-6 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
-              <div className="font-mono text-3xl font-semibold tracking-tight text-sr-red sm:text-4xl">
+              <div className="font-mono text-2xl font-semibold tracking-tight text-sr-red sm:text-3xl">
                 {m.value}
               </div>
-              <p className="mt-2 text-sm leading-snug text-sr-text-2">
+              <p className="mt-1.5 text-[12.5px] leading-snug text-sr-text-2">
                 {t(m.label)}
               </p>
             </motion.div>
           ))}
         </div>
 
-        <div className="mx-auto mt-4 grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="mx-auto mt-3 grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2">
           {RESULTS.highlight.map((m, i) => (
             <motion.div
               key={i}
@@ -60,12 +60,12 @@ export function Results() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.55, delay: 0.2 + i * 0.06 }}
-              className="relative overflow-hidden rounded-2xl border border-sr-line bg-sr-bg-3/55 px-6 py-10 text-center"
+              className="relative overflow-hidden rounded-2xl border border-sr-line bg-sr-bg-3/55 px-5 py-7 text-center"
             >
-              <div className="font-mono text-5xl font-semibold tracking-tight text-sr-red sm:text-6xl">
+              <div className="font-mono text-3xl font-semibold tracking-tight text-sr-red sm:text-4xl">
                 {m.value}
               </div>
-              <p className="mt-3 text-base text-sr-text">{t(m.label)}</p>
+              <p className="mt-2 text-[13px] text-sr-text">{t(m.label)}</p>
             </motion.div>
           ))}
         </div>

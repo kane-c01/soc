@@ -19,7 +19,7 @@ export function UseCases() {
   const { t } = useLang();
 
   return (
-    <section id="use-cases" className="relative py-24 sm:py-32">
+    <section id="use-cases" className="relative py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(USE_CASES.eyebrow)}

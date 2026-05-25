@@ -21,7 +21,7 @@ export function Features() {
   const { t } = useLang();
 
   return (
-    <section id="features" className="relative py-24 sm:py-32">
+    <section id="features" className="relative py-16 sm:py-20">
       <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-sr-line-2 to-transparent" />
       <Container>
         <SectionHeader

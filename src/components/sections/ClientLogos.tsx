@@ -6,11 +6,11 @@ import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
- * ClientLogos — 单行无限 marquee 的真实 logo 墙
+ * ClientLogos — 单行无限 marquee 的平台覆盖墙
  *
  * 视觉策略：
  * - 横向无限滚动，hover 暂停（沿用 sr-marquee class）
- * - 每个 logo = SimpleIcons CDN 提供的官方 brand-color SVG + wordmark
+ * - 每个 logo = SimpleIcons CDN 提供的平台 brand-color SVG + wordmark
  * - 上下边缘 fade，让 logo 不在边界硬切，更接近真实 logo wall 体验
  */
 export function ClientLogos() {
@@ -62,7 +62,7 @@ function LogoChip({
       aria-hidden={ariaHidden}
       className="inline-flex shrink-0 items-center gap-2.5 rounded-xl border border-sr-line bg-white px-4 py-2.5 shadow-sm transition hover:border-sr-line-2 hover:bg-white"
     >
-      {/* SimpleIcons CDN 直接提供品牌色 SVG */}
+      {/* SimpleIcons CDN 直接提供平台品牌色 SVG */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`https://cdn.simpleicons.org/${item.logoSlug}`}

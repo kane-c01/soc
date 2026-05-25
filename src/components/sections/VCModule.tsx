@@ -13,7 +13,7 @@ export function VCModule() {
   const { t, lang } = useLang();
 
   return (
-    <section id="vc" className="relative py-24 sm:py-32">
+    <section id="vc" className="relative py-16 sm:py-20">
       <div aria-hidden className="absolute inset-0 -z-10 sr-grid opacity-40" />
       <Container>
         <div className="grid items-start gap-12 lg:grid-cols-12">

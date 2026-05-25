@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#21130f"/>
+      <stop offset="0.7" stop-color="#4f3f37"/>
+      <stop offset="1" stop-color="#cc0a0d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="90" y="86" width="1020" height="503" rx="36" fill="#ffffff" opacity="0.94"/>
+  <rect x="142" y="142" width="456" height="391" rx="24" fill="#21130f"/>
+  <rect x="650" y="152" width="360" height="38" rx="19" fill="#cc0a0d"/>
+  <rect x="650" y="236" width="430" height="30" rx="15" fill="#21130f" opacity="0.22"/>
+  <rect x="650" y="302" width="384" height="30" rx="15" fill="#21130f" opacity="0.18"/>
+  <rect x="650" y="368" width="456" height="30" rx="15" fill="#21130f" opacity="0.14"/>
+  <text x="188" y="245" fill="#f0dfcb" font-family="ui-monospace, Menlo, monospace" font-size="28">&gt; search("buyer intent")</text>
+  <text x="188" y="310" fill="#f0dfcb" font-family="ui-monospace, Menlo, monospace" font-size="28">&gt; map competitors</text>
+  <text x="188" y="375" fill="#f0dfcb" font-family="ui-monospace, Menlo, monospace" font-size="28">&gt; route signals</text>
+  <text x="650" y="485" fill="#21130f" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="900">AI Research Stack</text>
+  <text x="650" y="536" fill="#4f3f37" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="600">Buyer research, competitor mapping, summaries</text>
+</svg>

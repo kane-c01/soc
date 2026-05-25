@@ -94,7 +94,7 @@ export function ApplyForm() {
   }
 
   return (
-    <section id="apply" className="relative scroll-mt-24 py-24 sm:py-32">
+    <section id="apply" className="relative scroll-mt-24 py-16 sm:py-20">
       <Container>
         <div className="grid items-start gap-10 lg:grid-cols-12">
           {/* Left: copy + evaluates */}

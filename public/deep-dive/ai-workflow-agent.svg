@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf7f2"/>
+      <stop offset="0.5" stop-color="#f0dfcb"/>
+      <stop offset="1" stop-color="#21130f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="88" y="88" width="1024" height="499" rx="36" fill="#ffffff" opacity="0.92"/>
+  <circle cx="256" cy="338" r="96" fill="#cc0a0d"/>
+  <circle cx="600" cy="338" r="96" fill="#21130f"/>
+  <circle cx="944" cy="338" r="96" fill="#f87f23"/>
+  <path d="M355 338h146M699 338h146" stroke="#21130f" stroke-width="18" stroke-linecap="round" opacity="0.45"/>
+  <text x="178" y="510" fill="#21130f" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="900">AI Workflow Agent</text>
+  <text x="178" y="560" fill="#4f3f37" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">Automate repetitive work across tools</text>
+  <text x="224" y="350" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="800">1</text>
+  <text x="568" y="350" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="800">2</text>
+  <text x="912" y="350" fill="#fff" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="800">3</text>
+</svg>

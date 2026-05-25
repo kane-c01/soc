@@ -32,9 +32,9 @@ export function SectionHeader({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-sr-muted"
+          className="inline-flex items-center gap-1.5 rounded-full border border-sr-red/25 bg-sr-red/[0.06] px-3 py-1 text-[12px] font-semibold tracking-tight text-sr-red"
         >
-          <span className="h-px w-6 bg-sr-red/60" />
+          <span className="size-1.5 rounded-full bg-sr-red" />
           {eyebrow}
         </motion.span>
       )}
@@ -43,7 +43,7 @@ export function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6, delay: 0.05 }}
-        className="text-balance text-3xl font-semibold tracking-[-0.02em] text-sr-text sm:text-4xl lg:text-5xl"
+        className="text-balance text-2xl font-semibold tracking-[-0.02em] text-sr-text sm:text-3xl lg:text-[40px] lg:leading-[1.15]"
       >
         {title}
       </motion.h2>
@@ -53,7 +53,7 @@ export function SectionHeader({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="max-w-2xl text-pretty text-base leading-relaxed text-sr-text-2 sm:text-lg"
+          className="max-w-2xl text-pretty text-[14px] leading-relaxed text-sr-text-2 sm:text-[15px]"
         >
           {sub}
         </motion.p>

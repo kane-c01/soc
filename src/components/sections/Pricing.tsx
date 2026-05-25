@@ -10,18 +10,17 @@ import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /**
- * Pricing — 3 档（Pilot · Growth · Enterprise）
+ * Pricing — 飞书第 7 屏「合作模式」
  *
  * 视觉策略：
- * - 普通档：白底 + 浅边 + 轻阴影
- * - 推荐档（Growth）：黑底白字 + 红色 accent — 与浅色页面形成反差
- * - 企业档：白底 + 米色填充按钮，CTA 走 mailto，区分销售路径
+ * - Signal Test：黑底白字，强调「先验证」
+ * - Growth Sprint：白底浅边，强调「验证后放大」
  */
 export function Pricing() {
   const { t } = useLang();
 
   return (
-    <section id="pricing" className="relative py-24 sm:py-32">
+    <section id="pricing" className="relative py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(PRICING.eyebrow)}
@@ -29,7 +28,7 @@ export function Pricing() {
           sub={t(PRICING.sub)}
         />
 
-        <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-2">
           {PRICING.plans.map((plan, i) => {
             const isDark = plan.highlight;
             return (
@@ -127,8 +126,8 @@ export function Pricing() {
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed text-sr-muted">
           {t({
-            zh: "所有套餐的报价都是在沟通后量身定制 — 我们不发统一报价单。",
-            en: "Every plan is custom-quoted after a discovery call — we don't send generic price lists.",
+            zh: "提交产品官网、目标市场和竞品链接后，我们会先判断是否适合做 Signal Test，再给出具体测试建议。",
+            en: "Submit your website, target market and competitors. We'll first assess whether a Signal Test makes sense, then recommend a concrete testing plan.",
           })}
         </p>
       </Container>

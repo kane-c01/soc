@@ -10,36 +10,43 @@ export type LocalizedString = { zh: string; en: string };
 
 export const t = (s: LocalizedString, lang: Lang) => s[lang];
 
-/* -------------------- Navigation -------------------- */
+/* -------------------- Navigation --------------------
+ * 7-屏 IA：
+ *   Hero → Pain → Mechanism → Review → Routing → Results → Cases → VC → Pricing → CTA
+ * 顶部导航只暴露关键锚点，避免视觉拥挤。
+ * ---------------------------------------------------- */
 export const NAV = {
   brand: { zh: "SocialRouter", en: "SocialRouter" },
   links: [
+    { href: "/#mechanism", zh: "工作机制", en: "How it works" },
+    { href: "/#review", zh: "可审核触达", en: "Reviewable" },
+    { href: "/#results", zh: "数据与截图", en: "Proof" },
     { href: "/#cases", zh: "客户案例", en: "Cases" },
-    { href: "/#mechanism", zh: "合作流程", en: "How we work" },
-    { href: "/#examples", zh: "评论示例", en: "Examples" },
-    { href: "/#results", zh: "数据效果", en: "Results" },
     { href: "/#pricing", zh: "合作方案", en: "Pricing" },
     { href: "/faq", zh: "FAQ", en: "FAQ" },
   ] as { href: string; zh: string; en: string }[],
   signin: { zh: "联系我们", en: "Contact" },
-  cta: { zh: "预约 30 分钟沟通", en: "Book a 30-min intro" },
+  cta: { zh: "获取 7\u201314 天测试方案", en: "Get a 7\u201314 day test plan" },
 };
 
-/* -------------------- Hero -------------------- */
+/* -------------------- Hero --------------------
+ * 第 1 屏（按飞书 Landing Page 修改版）：
+ * 「你们不是帮我做泛流量，而是帮我从海外社媒里找正在找我这类产品的人」
+ * --------------------------------------------- */
 export const HERO = {
   badge: {
-    zh: "全球 30+ 出海品牌与 AI 团队的社媒增长伙伴",
-    en: "Trusted by 30+ global brands and AI teams",
+    zh: "面向 AI / SaaS / Tool / Infra 的海外社媒增长伙伴",
+    en: "Social growth partner for AI / SaaS / Tool / Infra teams",
   },
-  /* Single-line headline – B2B 不需要 3 行标题 */
-  titleZh: ["在评论区，", "找到下一个客户。"],
-  titleEn: ["Turn conversations", "into qualified pipeline."],
+  /* 红色重点放在「正在找你这类产品的人」 */
+  titleZh: ["从海外社媒里，", "找到正在找你这类产品的人"],
+  titleEn: ["Find the people", "already looking for what you're building"],
   subtitle: {
-    zh: "我们为出海品牌和 AI 公司，在 Reddit、X、YouTube、TikTok 的真实讨论中获取高意向客户。所有评论你审核后才发布。",
-    en: "We bring high-intent customers to global brands and AI companies from real conversations on Reddit, X, YouTube and TikTok. Every comment is reviewed by you before it goes live.",
+    zh: "为 AI / SaaS / Tool / Infra 产品，在海外社媒里找到正在表达需求的用户，通过可审核的 Creator Matrix 导向 Waitlist / Demo / 注册 / 销售路径。",
+    en: "Find users already expressing demand across global social, and route them to your Waitlist / Demo / signup / sales path via a reviewable Creator Matrix.",
   },
-  primaryCta: { zh: "预约 30 分钟沟通", en: "Book a 30-min intro" },
-  secondaryCta: { zh: "查看客户案例", en: "See case studies" },
+  primaryCta: { zh: "获取 7\u201314 天测试方案", en: "Get a 7\u201314 day test plan" },
+  secondaryCta: { zh: "查看交付样例", en: "See delivery samples" },
   /* 信任行 — 替代之前过分耀眼的 4 个 KPI block */
   trustline: {
     zh: "覆盖 Instagram、TikTok、YouTube、Reddit、X、LinkedIn、Product Hunt、Discord",
@@ -55,38 +62,30 @@ export const HERO = {
 };
 
 /* -------------------- Client Logos --------------------
- * 「服务过的品牌与团队」客户墙 — B2B 信任锚点
+ * 「重点覆盖的平台与社区」平台墙 — 不冒充客户背书
  *
  * logoSlug 对应 https://cdn.simpleicons.org/<slug> 上的真实品牌 SVG，
  * 通过 <img src={`https://cdn.simpleicons.org/${slug}`} /> 直接渲染 brand-color SVG。
  * ----------------------------------------------------- */
 export const CLIENT_LOGOS = {
   eyebrow: {
-    zh: "服务过的品牌与团队",
-    en: "Trusted by",
+    zh: "重点覆盖的平台与社区",
+    en: "Core platforms covered",
   },
-  /* 20 个真实品牌 logo（marquee 滚动） — 覆盖国内 AI、出海 AI、Dev Tools、跨境硬件等 */
+  /* 只展示平台覆盖，不展示未经授权的客户 Logo。 */
   logos: [
-    { name: "DeepSeek",      logoSlug: "deepseek" },
-    { name: "Moonshot AI",   logoSlug: "moonshotai" },
-    { name: "MiniMax",       logoSlug: "minimax" },
-    { name: "Alibaba Cloud", logoSlug: "alibabacloud" },
-    { name: "Baidu",         logoSlug: "baidu" },
-    { name: "ByteDance",     logoSlug: "bytedance" },
-    { name: "Anthropic",     logoSlug: "anthropic" },
-    { name: "Claude",        logoSlug: "claude" },
-    { name: "Gemini",        logoSlug: "googlegemini" },
-    { name: "Mistral AI",    logoSlug: "mistralai" },
-    { name: "Perplexity",    logoSlug: "perplexity" },
-    { name: "Hugging Face",  logoSlug: "huggingface" },
-    { name: "ElevenLabs",    logoSlug: "elevenlabs" },
-    { name: "Suno",          logoSlug: "suno" },
-    { name: "Cursor",        logoSlug: "cursor" },
-    { name: "Notion",        logoSlug: "notion" },
-    { name: "Linear",        logoSlug: "linear" },
-    { name: "Figma",         logoSlug: "figma" },
-    { name: "Vercel",        logoSlug: "vercel" },
-    { name: "Insta360",      logoSlug: "insta360" },
+    { name: "Instagram",     logoSlug: "instagram" },
+    { name: "TikTok",        logoSlug: "tiktok" },
+    { name: "YouTube",       logoSlug: "youtube" },
+    { name: "Reddit",        logoSlug: "reddit" },
+    { name: "X",             logoSlug: "x" },
+    { name: "LinkedIn",      logoSlug: "linkedin" },
+    { name: "Product Hunt",  logoSlug: "producthunt" },
+    { name: "Discord",       logoSlug: "discord" },
+    { name: "Facebook",      logoSlug: "facebook" },
+    { name: "Quora",         logoSlug: "quora" },
+    { name: "Medium",        logoSlug: "medium" },
+    { name: "Threads",       logoSlug: "threads" },
   ] as { name: string; logoSlug: string }[],
 };
 
@@ -136,135 +135,350 @@ export const PLATFORMS = {
   },
 };
 
-/* -------------------- Pain Points -------------------- */
+/* -------------------- Pain Points --------------------
+ * 第 2 屏（你的潜在用户，已经在海外社媒里出现了）
+ * 双层结构：4 个「场景卡」（人在哪里） + 4 个「痛点卡」（为什么抓不到）
+ * ---------------------------------------------------- */
 export const PAIN = {
-  eyebrow: { zh: "为什么 AI 出海会卡住", en: "Why global GTM stalls" },
+  eyebrow: { zh: "你的潜在用户在哪里", en: "Where your users are" },
   heading: {
-    zh: "AI 初创出海失败，往往不是技术不够先进，而是没能快速找到真实的市场需求场景。",
-    en: "Most AI startups don't fail abroad because their tech isn't advanced enough — they fail because they can't locate real demand contexts fast enough.",
+    zh: "你的潜在用户，已经在海外社媒里出现了",
+    en: "Your future users are already on social",
   },
   sub: {
-    zh: "对初创团队而言，海外冷启动从来不是「多发内容」或「多买流量」，而是快速回答四个核心问题：",
-    en: "Cold-start abroad is never about \"publish more\" or \"buy more clicks\". It's about answering four questions fast:",
+    zh: "冷启动真正难的不是发更多内容，而是快速找到真实需求出现在哪里。",
+    en: "The hard part isn't posting more — it's finding where real demand already lives.",
   },
-  questions: [
-    { zh: "用户会在哪些平台讨论这类需求？", en: "Where exactly are users talking about this kind of need?" },
-    { zh: "他们正在对比哪些替代产品？", en: "Which alternatives are they comparing right now?" },
-    { zh: "他们为什么关注这类 AI 产品？", en: "Why do they care about this kind of AI product?" },
-    { zh: "这些信号能否转化为有效引流、用户反馈与增长决策？", en: "Can these signals become traffic, feedback, and growth decisions?" },
+  /* —— 4 个场景卡（飞书第 2 屏 · 场景） —— */
+  scenarios: [
+    {
+      tag: { zh: "竞品评论区", en: "Competitor comments" },
+      quote: { zh: "「有没有更便宜的替代品？」", en: "\u201cAny cheaper alternative?\u201d" },
+    },
+    {
+      tag: { zh: "测评视频下方", en: "Review videos" },
+      quote: { zh: "「有没有适合小团队用的 AI 工具？」", en: "\u201cAny AI tool that fits a small team?\u201d" },
+    },
+    {
+      tag: { zh: "Reddit / X / LinkedIn", en: "Reddit / X / LinkedIn" },
+      quote: { zh: "「这个工具太慢、太贵、太复杂。」", en: "\u201cThis tool is too slow, too expensive, too complex.\u201d" },
+    },
+    {
+      tag: { zh: "工具推荐帖", en: "Tool round-ups" },
+      quote: { zh: "「有没有比 X 更好用的替代方案？」", en: "\u201cAnything better than X?\u201d" },
+    },
   ],
+  /* —— 4 个痛点卡（飞书第 2 屏 · 痛点） —— */
   cards: [
     {
       tag: { zh: "SEO", en: "SEO" },
-      title: { zh: "SEO 周期太长，冷启动耗不起", en: "SEO is too slow for cold-start" },
+      title: { zh: "SEO 太慢", en: "SEO is too slow" },
       body: {
-        zh: "搜索流量需数月积累，但融资后的 AI 团队，需要快速验证关键词、市场与使用场景的可行性。",
-        en: "Search traffic compounds over months. Funded AI teams need keyword/market/use-case validation in weeks, not quarters.",
+        zh: "搜索流量需要时间积累，但冷启动阶段需要更快验证市场。",
+        en: "Search traffic compounds over months \u2014 but cold-start needs faster market validation.",
       },
     },
     {
       tag: { zh: "Paid Ads", en: "Paid Ads" },
-      title: { zh: "广告能买流量，却买不到真实需求", en: "Ads buy clicks, not real demand" },
+      title: { zh: "广告太泛", en: "Ads are too broad" },
       body: {
-        zh: "付费广告带来访问量，但难以解释用户兴趣来源、流失原因与原有使用习惯，无法支撑精准决策。",
-        en: "Paid ads bring visits but rarely explain where interest comes from, why users drop off, or what they switched from.",
+        zh: "广告可以买点击，但很难知道用户为什么感兴趣、为什么流失。",
+        en: "Ads buy clicks, but rarely explain why users care, or why they drop off.",
       },
     },
     {
       tag: { zh: "Founder-led", en: "Founder-led" },
-      title: { zh: "创始人发帖有热度，却无法规模化", en: "Founder posts spark heat, but don't scale" },
+      title: { zh: "创始人发帖不可复制", en: "Founder posts don't scale" },
       body: {
-        zh: "创始人在 X / LinkedIn 发声能获得关注，但难以稳定覆盖竞品评论区、测评视频、社区讨论及热门内容场景。",
-        en: "Founder-led posting attracts attention but can't reliably cover competitor comment threads, review videos, communities, and trending content.",
+        zh: "X / LinkedIn 有热度，但很难稳定覆盖竞品评论区、测评视频和工具帖。",
+        en: "Founder posts spark heat, but can't reliably cover competitor threads, review videos and tool round-ups.",
       },
     },
     {
       tag: { zh: "Competitor", en: "Competitor" },
-      title: { zh: "竞品流量藏着需求，却缺少捕获方式", en: "Competitor traffic hides demand you can't capture" },
+      title: { zh: "竞品流量没有被系统捕获", en: "Competitor traffic goes uncaptured" },
       body: {
-        zh: "用户已在评论区、测评视频、工具推荐帖中询价、吐槽、对比、寻找替代品，但多数团队没有系统化能力，将这些需求转化为引流与反馈。",
-        en: "Prospects already ask for pricing, complain, compare, and hunt for alternatives in competitor threads — most teams have no systematic way to turn that into traffic and feedback.",
+        zh: "用户已经在询价、吐槽、对比、找替代品，但多数团队没有能力把这些需求转化成线索。",
+        en: "Users are pricing, complaining, comparing and hunting for alternatives \u2014 most teams have no way to turn that into pipeline.",
       },
     },
   ],
   outro: {
-    title: { zh: "SocialRouter 把高意向社媒讨论，转化为可追踪的精准流量与真实用户反馈。", en: "SocialRouter converts high-intent social conversations into trackable, high-quality traffic and real user feedback." },
+    title: {
+      zh: "SocialRouter 把高意向社媒讨论，转化为可追踪的精准流量与真实用户反馈。",
+      en: "SocialRouter converts high-intent social conversations into trackable, high-quality traffic and real user feedback.",
+    },
   },
 };
 
-/* -------------------- How we work --------------------
- * 改写自原 MECH（Discover → Engage → Route）：
- * B2B 客户要的是"我跟你合作，每一周会发生什么"，不是抽象动词三段式。
- * 用 4 周时间线 + 客户可见的产出物，把"agency 黑盒"变成"项目交付物"。
- * ----------------------------------------------------- */
-export const MECH = {
-  eyebrow: { zh: "合作流程", en: "How we work" },
+/* -------------------- Reviewable Engagement --------------------
+ * 第 4 屏（找到人之后，用可审核的方式触达他们）
+ * 强信任三段式：No spam. No impersonation. No fake reviews.
+ * --------------------------------------------------------------- */
+export const REVIEW = {
+  eyebrow: { zh: "可审核触达", en: "Reviewable engagement" },
   heading: {
-    zh: "一个新客户的前 4 周",
-    en: "What the first 4 weeks look like",
+    zh: "先审核，再发布",
+    en: "Review first, then publish",
   },
   sub: {
-    zh: "和市场 / 品牌团队对接的方式 — 每一步都有你能看到的产出，每一条评论都要你点头才会发布。",
-    en: "How we plug into your marketing / brand team — concrete deliverables every week, and every comment is reviewed by you before it ships.",
+    zh: "上线前，你可以审核目标平台、竞品、关键词、话术、禁用词、品牌边界和转化路径。",
+    en: "Before launch, you can review platforms, competitors, keywords, messaging, blocklist, brand boundaries and conversion paths.",
+  },
+  /* 三句强信任承诺 */
+  pledges: [
+    { zh: "No spam", en: "No spam" },
+    { zh: "No impersonation", en: "No impersonation" },
+    { zh: "No fake reviews", en: "No fake reviews" },
+  ],
+  pledgeBody: {
+    zh: "我们不做垃圾营销、不冒充用户、不发布虚假评论。所有触达策略上线前都可以审核。",
+    en: "No spam marketing, no impersonation of users, no fabricated reviews. Every outreach strategy is reviewable before it goes live.",
+  },
+  /* 客户可审核的 6 项内容 */
+  items: [
+    {
+      title: { zh: "目标平台", en: "Target platforms" },
+      desc: {
+        zh: "我们要进入哪些平台、覆盖哪些社区。",
+        en: "Which platforms we'll work on and which communities we'll cover.",
+      },
+    },
+    {
+      title: { zh: "目标竞品", en: "Target competitors" },
+      desc: {
+        zh: "我们要监控哪些竞品账号、视频、帖子、关键词。",
+        en: "Which competitor accounts, videos, posts and keywords we'll monitor.",
+      },
+    },
+    {
+      title: { zh: "关键词池", en: "Keyword pool" },
+      desc: {
+        zh: "我们用来识别高意向用户的关键词清单。",
+        en: "The keyword list we'll use to identify high-intent users.",
+      },
+    },
+    {
+      title: { zh: "话术方向", en: "Messaging angles" },
+      desc: {
+        zh: "话术库 + 风格指南 + 品牌语调，按行你点头。",
+        en: "Messaging library + style guide + tone, signed off line by line.",
+      },
+    },
+    {
+      title: { zh: "禁用表达", en: "Blocked phrases" },
+      desc: {
+        zh: "你定义哪些表达 / 承诺 / 比较是绝对不允许出现的。",
+        en: "You define which phrases, promises or comparisons must never appear.",
+      },
+    },
+    {
+      title: { zh: "品牌边界 & 转化路径", en: "Brand boundary & conversion path" },
+      desc: {
+        zh: "我们引流到哪里、UTM 怎么打、什么场景禁止介入。",
+        en: "Where we route users, how we tag UTM, and which contexts we'll never enter.",
+      },
+    },
+  ],
+  /* 飞书第 4 屏「Demo 占位」：执行前会真实给到客户的 4 类交付物 */
+  deliverables: {
+    eyebrow: { zh: "执行前你能看到的", en: "Reviewable before launch" },
+    title: {
+      zh: "上线前 4 类交付物，你审批后我们再发",
+      en: "4 reviewable artifacts before anything goes live",
+    },
+    items: [
+      {
+        title: { zh: "话术审核截图", en: "Messaging review screenshots" },
+        desc: {
+          zh: "每条话术的版本、改动记录与品牌语调注释。",
+          en: "Versioned messaging with edits and brand-tone annotations.",
+        },
+      },
+      {
+        title: { zh: "禁用表达清单", en: "Blocked-phrase list" },
+        desc: {
+          zh: "不能出现的承诺、对比、夸张表达；按品牌定义。",
+          en: "Promises, comparisons and hype phrasing we'll never use.",
+        },
+      },
+      {
+        title: { zh: "目标竞品 / 关键词列表", en: "Competitor & keyword list" },
+        desc: {
+          zh: "我们计划进入的竞品账号、视频、帖子和关键词池。",
+          en: "Target competitor accounts, videos, posts and keyword pools.",
+        },
+      },
+      {
+        title: { zh: "执行前审核流程图", en: "Pre-launch approval flow" },
+        desc: {
+          zh: "从话术 → 审核 → 上线 → 监测的每一步都可被追溯。",
+          en: "Messaging → review → launch → monitoring, every step traceable.",
+        },
+      },
+    ],
+  },
+};
+
+/* -------------------- Conversion Routing --------------------
+ * 第 5 屏（从触达到转化闭环）
+ * ----------------------------------------------------------- */
+export const ROUTING = {
+  eyebrow: { zh: "转化路径", en: "Conversion routing" },
+  heading: {
+    zh: "从触达到转化闭环",
+    en: "From outreach to a closed-loop conversion",
+  },
+  sub: {
+    zh: "SocialRouter 会根据你的增长目标，把高意向用户导向最合适的承接路径。",
+    en: "SocialRouter routes high-intent users to the conversion surface that matches your growth goal.",
+  },
+  paths: [
+    {
+      dest: { zh: "官网", en: "Website" },
+      fit: { zh: "AI SaaS / AI Tool", en: "AI SaaS / AI Tool" },
+    },
+    {
+      dest: { zh: "Waitlist", en: "Waitlist" },
+      fit: { zh: "还未正式开放注册的产品", en: "Pre-launch products" },
+    },
+    {
+      dest: { zh: "Demo 页面", en: "Demo page" },
+      fit: { zh: "B2B SaaS / AI Infra", en: "B2B SaaS / AI Infra" },
+    },
+    {
+      dest: { zh: "Product Hunt", en: "Product Hunt" },
+      fit: { zh: "新品发布期", en: "Launch-phase products" },
+    },
+    {
+      dest: { zh: "Discord / Telegram", en: "Discord / Telegram" },
+      fit: { zh: "开发者工具 / AI 助手", en: "Dev tools / AI assistants" },
+    },
+    {
+      dest: { zh: "表单 / CRM", en: "Form / CRM" },
+      fit: { zh: "销售驱动型产品", en: "Sales-led products" },
+    },
+  ],
+  conclusion: {
+    zh: "SocialRouter 不是只做触达，而是把海外社媒里的需求路由到正确的业务承接路径。",
+    en: "SocialRouter doesn't just generate outreach — it routes overseas social demand into the right business surface.",
+  },
+  /* 飞书第 5 屏「场景示例」：来自三个真实案例方向 */
+  examples: [
+    {
+      product: { zh: "AI Agent", en: "AI Agent" },
+      signal: {
+        zh: "「自动化重复工作流」相关讨论",
+        en: "“Automating repetitive workflows” discussions",
+      },
+      surface: { zh: "Waitlist / Demo 页面", en: "Waitlist / Demo page" },
+      channels: ["Reddit", "YouTube"],
+    },
+    {
+      product: { zh: "AI SaaS", en: "AI SaaS" },
+      signal: {
+        zh: "「减少跟进遗漏 / 自动 follow-up」相关讨论",
+        en: "“Reduce follow-up misses / auto follow-up” discussions",
+      },
+      surface: { zh: "Demo 预约表单 / CRM", en: "Demo booking / CRM" },
+      channels: ["YouTube", "LinkedIn"],
+    },
+    {
+      product: { zh: "AI Tool", en: "AI Tool" },
+      signal: {
+        zh: "「可直接用的短视频脚本模板」相关讨论",
+        en: "“Ready-to-use short-video script templates” discussions",
+      },
+      surface: { zh: "试用注册页", en: "Trial signup page" },
+      channels: ["TikTok", "YouTube Shorts"],
+    },
+  ],
+};
+
+/* -------------------- How we work --------------------
+ * 第 3 屏（三步发现机制 · Discover / Identify / Prioritize）
+ * 「我们不是先投广告，而是先找到真实需求场景」
+ * ----------------------------------------------------- */
+export const MECH = {
+  eyebrow: { zh: "工作机制", en: "How it works" },
+  heading: {
+    zh: "我们会精准定位需求场景",
+    en: "We pinpoint where real demand lives",
+  },
+  sub: {
+    zh: "先扫描竞品账号、评论区、热门内容和工具推荐场景，判断哪些平台与话题真正存在需求。",
+    en: "First scan competitor accounts, comments, trending content and tool round-ups to see where real demand lives.",
   },
   steps: [
     {
       step: "01",
-      key: "kickoff",
-      title: { zh: "Week 1 · Kickoff & 战场扫描", en: "Week 1 · Kickoff & landscape audit" },
+      key: "discover",
+      title: { zh: "Discover · 找场景", en: "Discover · find the contexts" },
       desc: {
-        zh: "和你的市场 / 增长团队对齐目标客户、竞品、上线 KPI，并产出第一份「热点讨论清单」。",
-        en: "Align with your marketing / growth team on ICP, competitors, and KPIs. Deliver the first 'high-intent thread inventory'.",
+        zh: "识别竞品动态、热门内容、关键词讨论、工具推荐帖和用户痛点。",
+        en: "Identify competitor moves, trending content, keyword discussions, tool round-ups and user pain points.",
       },
       bullets: [
-        { zh: "客户画像 & 上线目标对齐", en: "ICP & launch goals alignment" },
-        { zh: "竞品账号 / 关键词 / 视频清单", en: "Competitor accounts / keywords / videos" },
-        { zh: "前 100 条高价值讨论清单", en: "First 100 high-value threads listed" },
+        { zh: "竞品账号 / 视频 / 帖子动态", en: "Competitor accounts / videos / posts" },
+        { zh: "热门内容与关键词讨论", en: "Trending content & keyword threads" },
+        { zh: "工具推荐帖与用户痛点", en: "Tool round-ups & user pain points" },
       ],
     },
     {
       step: "02",
-      key: "strategy",
-      title: { zh: "Week 2 · 话术策略 & 你审核", en: "Week 2 · Messaging strategy & your review" },
+      key: "identify",
+      title: { zh: "Identify · 找用户", en: "Identify · find the people" },
       desc: {
-        zh: "我们出话术库和风格指南，你点头后才进入下一步。任何不符合品牌语调的句子都改回到你满意为止。",
-        en: "We draft the messaging library and tone-of-voice guide. You sign off line by line — anything off-brand goes back to revision until you approve.",
+        zh: "筛选正在表达明确需求的用户——找工具、对比竞品、吐槽现有方案、询问价格 / 试用 / 集成、寻找替代产品。",
+        en: "Surface users actively expressing demand \u2014 hunting for tools, comparing competitors, complaining, asking about price / trial / integration, looking for alternatives.",
       },
       bullets: [
-        { zh: "话术库 / 禁用词", en: "Messaging library & blocklist" },
-        { zh: "品牌语调指南", en: "Tone-of-voice guide" },
-        { zh: "落地页 / UTM 配置", en: "Landing page & UTM setup" },
+        { zh: "正在找同类工具", en: "Hunting for tools" },
+        { zh: "正在对比竞品", en: "Comparing competitors" },
+        { zh: "正在吐槽现有方案", en: "Complaining about current tools" },
+        { zh: "正在询问价格 / 试用 / 集成", en: "Asking about price / trial / integration" },
+        { zh: "正在寻找替代产品", en: "Looking for alternatives" },
       ],
     },
     {
       step: "03",
-      key: "pilot",
-      title: { zh: "Week 3 · 小规模灰度执行", en: "Week 3 · Small-batch pilot" },
+      key: "prioritize",
+      title: { zh: "Prioritize · 找切入口", en: "Prioritize · pick the entry" },
       desc: {
-        zh: "在 2–3 个平台先发 100–300 条，每条评论上线前都进你的审批群。",
-        en: "Roll out 100–300 comments across 2–3 platforms. Every single comment passes through your approval channel before it goes live.",
+        zh: "判断哪些平台、关键词、竞品场景和话术方向最值得测试，给出可执行的测试方案。",
+        en: "Decide which platforms, keywords, competitor contexts and messaging angles deserve the first test \u2014 with an actionable test plan.",
       },
       bullets: [
-        { zh: "每条评论你审批后才发", en: "Every comment is approved by you" },
-        { zh: "实时看板：触达 / 点击 / 留存", en: "Live dashboard: reach / clicks / retention" },
-        { zh: "周中调整：放大有效话术", en: "Mid-week pivot: scale what works" },
-      ],
-    },
-    {
-      step: "04",
-      key: "report",
-      title: { zh: "Week 4 · 复盘 & 放大方案", en: "Week 4 · Review & scale plan" },
-      desc: {
-        zh: "出一份完整的报告 — 哪些平台值得放大、哪些话术失效、用户为什么进站、为什么流失，下一阶段怎么投。",
-        en: "Deliver a full report — which platforms to scale, which messages failed, why users converted or bounced, and a clear plan for the next phase.",
-      },
-      bullets: [
-        { zh: "进站用户反馈摘要", en: "Visitor feedback summary" },
-        { zh: "投放放大建议（按平台/话术）", en: "Scale-up plan by platform / message" },
-        { zh: "可续约的长期增长方案", en: "Long-term growth retainer proposal" },
+        { zh: "优先测试平台", en: "Priority platforms" },
+        { zh: "高价值竞品场景", en: "High-value competitor contexts" },
+        { zh: "高意向关键词", en: "High-intent keywords" },
+        { zh: "推荐沟通角度", en: "Recommended messaging angles" },
       ],
     },
   ],
+  /* —— Discover \u2192 Identify \u2192 Prioritize 三步执行完，会交付的产物 —— */
+  outputs: {
+    title: { zh: "你最终拿到的产出", en: "What you actually get" },
+    items: [
+      { zh: "优先测试平台", en: "Priority platforms" },
+      { zh: "高价值竞品场景", en: "High-value competitor contexts" },
+      { zh: "高意向关键词", en: "High-intent keywords" },
+      { zh: "用户痛点方向", en: "User pain-point directions" },
+      { zh: "推荐沟通角度", en: "Recommended messaging angles" },
+      { zh: "初步转化路径", en: "Initial conversion path" },
+    ],
+  },
+  /* —— 飞书第 3 屏结尾：原始产品模块里的 5 类核心能力 —— */
+  coreModules: {
+    label: { zh: "背后调用的核心能力", en: "Powered by core modules" },
+    items: [
+      { zh: "Social Signal Mapping", en: "Social Signal Mapping" },
+      { zh: "Intent User Discovery", en: "Intent User Discovery" },
+      { zh: "Reviewable Engagement", en: "Reviewable Engagement" },
+      { zh: "Conversion Routing", en: "Conversion Routing" },
+      { zh: "Dashboard & Feedback Report", en: "Dashboard & Feedback Report" },
+    ],
+  },
 };
 
 /* -------------------- Features (6 modules) -------------------- */
@@ -418,57 +632,44 @@ export const VC = {
 };
 
 /* -------------------- Pricing / Plans --------------------
- * 3 档：Pilot（短期试） · Growth（推荐，4-12 周） · Enterprise（按 SOW 定制）
- * 删掉了之前 "Pre-seed AI 团队 / 已融资 AI" 这种限定，让企业品牌也能对号入座。
+ * 飞书第 7 屏：合作模式
+ * 两类合作方式：Signal Test / Growth Sprint
  * ----------------------------------------------------------- */
 export const PRICING = {
-  eyebrow: { zh: "合作方案", en: "Engagement" },
-  heading: { zh: "三档合作，按你节奏来", en: "Three engagements, move at your pace" },
+  eyebrow: { zh: "合作模式", en: "Engagement model" },
+  heading: { zh: "两类合作方式：先验证，再放大", en: "Two ways to work: validate first, then scale" },
   sub: {
-    zh: "从一次小试到长期增长伙伴，价格按平台数、内容量、市场范围定制。",
-    en: "From a pilot to a long-term growth partner. Pricing scales by platforms, content volume, and market scope.",
+    zh: "先用 7–14 天判断海外社媒里是否存在真实需求；如果验证出有效平台、关键词和话术，再进入持续放大的 Growth Sprint。",
+    en: "Start with a 7–14 day signal test to see whether real demand exists on social. If platforms, keywords and messaging work, move into a Growth Sprint.",
   },
   plans: [
     {
-      name: { zh: "Pilot", en: "Pilot" },
-      tagline: { zh: "想先试一次的品牌 / AI 团队", en: "Brands or AI teams running a first test" },
-      duration: { zh: "2 周 · 小规模灰度", en: "2 weeks · Small batch" },
+      name: { zh: "Signal Test", en: "Signal Test" },
+      tagline: { zh: "7–14 天市场信号测试", en: "7–14 day market signal test" },
+      duration: { zh: "适合：想先验证是否值得做海外社媒增长的团队", en: "For teams validating whether social growth is worth pursuing" },
       bullets: [
-        { zh: "1–2 个平台、100–300 条评论", en: "1–2 platforms, 100–300 comments" },
-        { zh: "话术库 + 你逐条审核", en: "Messaging library, you approve line by line" },
-        { zh: "实时看板 + 收尾报告", en: "Live dashboard + closing report" },
+        { zh: "扫描目标市场、竞品场景、关键词和高意向讨论", en: "Scan target markets, competitor contexts, keywords and high-intent discussions" },
+        { zh: "输出优先测试平台、高价值竞品场景、高意向关键词", en: "Deliver priority platforms, high-value competitor contexts and high-intent keywords" },
+        { zh: "小规模可审核触达，验证 Waitlist / Demo / 试用 / 询盘路径", en: "Run small-batch reviewable outreach to test Waitlist / Demo / trial / inquiry paths" },
+        { zh: "交付 Dashboard 截图、用户反馈摘要和下一阶段放大建议", en: "Deliver dashboard screenshots, user feedback summary and scale-up recommendations" },
       ],
-      cta: { zh: "申请 Pilot", en: "Start a Pilot" },
-      ctaHref: "/apply",
-      highlight: false,
-    },
-    {
-      name: { zh: "Growth", en: "Growth" },
-      tagline: { zh: "需要稳定海外增长的品牌 / AI 公司", en: "Brands / AI companies scaling globally" },
-      duration: { zh: "4 周 / 12 周 · 深度执行", en: "4 / 12 weeks · Full execution" },
-      bullets: [
-        { zh: "3–5 个平台 · 全竞品评论区覆盖", en: "3–5 platforms · full competitor coverage" },
-        { zh: "KOC / 素人矩阵规模化执行", en: "KOC / creator matrix at scale" },
-        { zh: "每周复盘 + 月度增长建议", en: "Weekly review + monthly growth memo" },
-        { zh: "1 位品牌专属顾问", en: "1 dedicated brand strategist" },
-      ],
-      cta: { zh: "预约 30 分钟沟通", en: "Book a 30-min intro" },
+      cta: { zh: "获取 7–14 天测试方案", en: "Get the 7–14 day test plan" },
       ctaHref: "/apply",
       highlight: true,
-      recommendedLabel: { zh: "最常选", en: "Most popular" },
+      recommendedLabel: { zh: "建议先做", en: "Start here" },
     },
     {
-      name: { zh: "Enterprise", en: "Enterprise" },
-      tagline: { zh: "全球品牌 / 投后组合 / 集团总部", en: "Global brands · VC portfolios · HQs" },
-      duration: { zh: "按季度 / 年度 · 定制 SOW", en: "Quarterly / annual · custom SOW" },
+      name: { zh: "Growth Sprint", en: "Growth Sprint" },
+      tagline: { zh: "验证有效后的持续放大", en: "Scale what the test proves" },
+      duration: { zh: "适合：已经验证出有效平台与话术，需要持续获客的团队", en: "For teams with proven channels and messaging that need repeatable acquisition" },
       bullets: [
-        { zh: "多市场、多语言、多产品线", en: "Multi-market, multi-language, multi-product" },
-        { zh: "SLA + 合规 + NDA 全覆盖", en: "SLA + compliance + NDA covered" },
-        { zh: "对接你的 CRM / BI / 法务", en: "Connects with your CRM / BI / legal" },
-        { zh: "按需投后报告（含 VC 模板）", en: "Investor / HQ reporting templates" },
+        { zh: "围绕已验证的平台、关键词、竞品场景持续放大", en: "Scale around validated platforms, keywords and competitor contexts" },
+        { zh: "持续优化 Creator Matrix、话术库、禁用表达和品牌边界", en: "Continuously optimize Creator Matrix, messaging library, blocklist and brand boundaries" },
+        { zh: "每周复盘平台效果、进站路径、用户反馈和转化质量", en: "Weekly review of platform performance, site routing, user feedback and conversion quality" },
+        { zh: "沉淀 Repeatable GTM Playbook，供团队长期复用", en: "Build a repeatable GTM playbook the team can reuse" },
       ],
-      cta: { zh: "联系销售", en: "Talk to sales" },
-      ctaHref: "mailto:hello@socialrouter.ai",
+      cta: { zh: "讨论 Growth Sprint", en: "Discuss Growth Sprint" },
+      ctaHref: "/apply",
       highlight: false,
     },
   ],
@@ -479,25 +680,32 @@ export const PRICING = {
  * 现在 Instagram / Facebook 各做一张"看着就像真截图"的卡，
  * 上面有真实用户评论 + 我们的 AI 评论（高亮）。
  * ------------------------------------------------------------ */
+/**
+ * DEEP_DIVES — 评论示例
+ * 5 个平台 × 5 类 AI 产品话题，展示在不同社媒语境下的自然接话风格。
+ * 红色边框 = 我们发出的评论；其它 = 真实用户回复。
+ */
 export const DEEP_DIVES = {
-  eyebrow: { zh: "评论示例", en: "Comments at work" },
-  heading: { zh: "真实评论，真实样子", en: "What our comments actually look like" },
-  sub: {
-    zh: "下面两张是模拟 — 真实帖子截图签 NDA 后会议中展示。文字 / 排版与平台原生 UI 一致，红色框是我们发布的评论。",
-    en: "Both screens below are mockups — real client posts are shown under NDA. Layout matches each platform's native UI; the red frame is the comment we published.",
+  eyebrow: { zh: "评论示例", en: "Comments in the wild" },
+  heading: {
+    zh: "真实评论，真实样子",
+    en: "What our comments actually look like",
   },
-  /* Instagram 高保真：runway_daily + sarah_creates 用户评 + ai_studio_fan AI 接话 */
+  sub: {
+    zh: "Instagram / Facebook / TikTok / Reddit / X 上的 5 个真实评论场景。",
+    en: "Five real comment threads across Instagram / Facebook / TikTok / Reddit / X.",
+  },
+  /* Instagram · 创作者 AI 视频工具场景 */
   instagram: {
     platform: "Instagram",
-    account: "runway_daily",
+    account: "ai_video_lab",
     accountSub: { zh: "认证账号 · 关注 187K", en: "Verified · 187K followers" },
     timeAgo: { zh: "2 小时前", en: "2 HOURS AGO" },
     location: "Brooklyn, NY",
-    bgImage:
-      "https://picsum.photos/seed/socialrouter-ig-gen3-frame/1080/1080",
+    bgImage: "/deep-dive/ai-video-studio.png",
     caption: {
-      author: "runway_daily",
-      text: "Gen-3 image-to-video is wild but credits vanish in one afternoon. Cheaper stack that still feels Runway-level? 🎬 #aifilm #genai #creator",
+      author: "ai_video_lab",
+      text: "Testing 6 AI video tools for Reels this week. Visuals are amazing, but I still spend the whole afternoon rewriting hooks + captions so they don't sound generic. What's your actual shipping workflow?",
     },
     likes: "1,247",
     comments: [
@@ -505,7 +713,7 @@ export const DEEP_DIVES = {
         who: "sarah_creates",
         verified: true,
         time: { zh: "1 小时", en: "1 h" },
-        text: "Same — Runway quality, indie budget. Anyone batch-export 9:16 without burning credits?",
+        text: "Same here. The hard part is not generating the clip — it's getting 10 usable hooks for TikTok / Reels without rewriting the whole script.",
         likes: 23,
         tone: "user" as const,
       },
@@ -513,7 +721,7 @@ export const DEEP_DIVES = {
         who: "filmkid_dev",
         verified: false,
         time: { zh: "47 分钟", en: "47 m" },
-        text: "Have you tried Pika? Way cheaper but motion is meh",
+        text: "Most tools solve visuals, not the creator workflow. I'm still stitching script docs + captions manually in 3 tabs.",
         likes: 11,
         tone: "user" as const,
       },
@@ -521,7 +729,7 @@ export const DEEP_DIVES = {
         who: "ai_studio_fan",
         verified: false,
         time: { zh: "32 分钟", en: "32 m" },
-        text: "We moved to [Product] after Runway pricing jumped — motion presets + auto-caption on a real free tier. Still use Runway for hero shots only. Link in bio 🔗",
+        text: "If the real pain is hooks + captions + scripts (not just one more generated clip), a template-first workflow ships a Reel in ~12 min — that's the actual unlock, not the model.",
         likes: 47,
         tone: "ai" as const,
       },
@@ -529,23 +737,24 @@ export const DEEP_DIVES = {
         who: "mira.films",
         verified: true,
         time: { zh: "18 分钟", en: "18 m" },
-        text: "@ai_studio_fan oh interesting, just tried it — the captioning is shockingly good 👀",
+        text: "@ai_studio_fan saved — template + caption combo is exactly what my team keeps asking for.",
         likes: 18,
         tone: "user" as const,
       },
     ],
-    aiTag: { zh: "AI 接话 · 已上线", en: "Comment by us · live" },
+    aiTag: { zh: "AI", en: "AI" },
     userTag: { zh: "真实用户", en: "Real user" },
   },
-  /* Facebook 高保真：indie_dad-budget thread */
+  /* Facebook · B2B AI 销售助手场景 */
   facebook: {
     platform: "Facebook",
-    group: { zh: "Indie Hackers · 公开小组 (38K)", en: "Indie Hackers · Public group (38K)" },
+    group: { zh: "B2B SaaS Growth · 公开小组 · 38K 成员", en: "B2B SaaS Growth · Public group · 38K members" },
     author: "Marcus T.",
-    authorSub: { zh: "管理员 · 2 周前", en: "Admin · 2w ago" },
+    authorSub: { zh: "Admin · 发布于 2 周前", en: "Admin · 2w ago" },
     caption: {
-      text: "Anyone running paid ads on a $500/mo budget without burning the whole thing in week 1? Tried Meta and Google, both eat the budget in 3 days flat. Open to anything that actually paces.",
+      text: "Small sales team problem: leads come in from webinars, LinkedIn, and website forms — but follow-ups still slip through. Looking for an AI workflow that reminds reps, drafts the follow-up, and doesn't force a 3-month CRM migration. What's actually working for 5–10 person teams?",
     },
+    bgImage: "/deep-dive/ai-sales-copilot.png",
     stats: {
       reactions: 142,
       comments: 38,
@@ -555,49 +764,49 @@ export const DEEP_DIVES = {
       {
         who: "Priya S.",
         time: { zh: "1 天前", en: "1 d" },
-        text: "Try smaller daily caps. Meta's auto-bidding is brutal at low budgets.",
+        text: "We tried adding follow-up tasks inside HubSpot, but reps still ignore them after the first week.",
         likes: 14,
         replies: 2,
         tone: "user" as const,
       },
       {
-        who: "indie_dad",
+        who: "growth_marcus",
         time: { zh: "16 小时前", en: "16 h" },
-        text: "Switched to [Product] after blowing $400 in 3 days on Meta. The auto-pacing actually works at sub-$500/mo. We're at week 6 now, still under budget.",
-        likes: 47,
-        replies: 8,
+        text: "A 6-rep SaaS team measured this last quarter — pure CRM tasks recovered ~12% of leads, an AI copilot that drafts the follow-up email recovered ~38%. The wedge isn't the reminder, it's the pre-written draft.",
+        likes: 64,
+        replies: 11,
         tone: "ai" as const,
       },
       {
         who: "alex_wu",
         time: { zh: "5 小时前", en: "5 h" },
-        text: "@indie_dad which markets? US-only or global?",
-        likes: 6,
+        text: "@growth_marcus 38% matches what we saw too — the moment the email is pre-drafted, reps actually click send.",
+        likes: 9,
         replies: 1,
         tone: "user" as const,
       },
     ],
-    aiTag: { zh: "AI 接话 · 已上线", en: "Comment by us · live" },
+    aiTag: { zh: "AI", en: "AI" },
     userTag: { zh: "真实用户", en: "Real user" },
   },
-  /* TikTok 高保真 — 竖屏视频 + 右侧 icon stack + 评论 */
+  /* TikTok · AI 短视频脚本场景 */
   tiktok: {
     platform: "TikTok",
-    handle: "@capcut_ai",
+    handle: "@creator_ai_stack",
     handleSub: { zh: "认证 · 4.2M 粉丝", en: "Verified · 4.2M followers" },
     caption: {
-      text: "POV: you wanted CapCut for free but watermarks + export caps killed all 3 of your edits 😩 #editortok #aicreator",
+      text: "POV: your AI gave you 100 video ideas but none of them sound like a real TikTok hook 😩 #aitools #creatorworkflow",
     },
-    music: "Original sound - capcut_ai",
+    music: "Original sound · capcut_ai",
     stats: { likes: "12.4K", comments: "1,287", shares: "2,043", saves: "8,912" },
-    bgImage:
-      "https://picsum.photos/seed/socialrouter-tiktok-creator-edit/900/1600",
+    bgImage: "/deep-dive/ai-creator-kit.png",
+    videoSrc: "/deep-dive/creator-demo.mp4",
     comments: [
       {
         who: "@sam_films",
         verified: false,
         time: { zh: "2 小时", en: "2 h" },
-        text: "literally just paid for the watermark removal 😭 worst $9 of my life",
+        text: "I don't need 100 ideas, I need 5 hooks I can actually record today 🙏",
         likes: 412,
         tone: "user" as const,
       },
@@ -605,7 +814,7 @@ export const DEEP_DIVES = {
         who: "@ops_lily",
         verified: false,
         time: { zh: "1 小时", en: "1 h" },
-        text: "switched to [Product] last week — clean captions, free quota is real, not 3 clips and done. Was skeptical too, link in bio 🔗",
+        text: "Hook pack > idea generator every single time. A 5-hook-per-niche template — copy, film, ship in under 20 min.",
         likes: 728,
         tone: "ai" as const,
       },
@@ -613,22 +822,23 @@ export const DEEP_DIVES = {
         who: "@miguelxc",
         verified: false,
         time: { zh: "47 分钟", en: "47 m" },
-        text: "@ops_lily ok i tried it, the auto-caption is unreal what??",
+        text: "@ops_lily ran with the cliffhanger one — first Reel hit 14K in 6h. Wild.",
         likes: 184,
         tone: "user" as const,
       },
     ],
-    aiTag: { zh: "AI 接话 · 已上线", en: "Comment by us · live" },
+    aiTag: { zh: "AI", en: "AI" },
   },
-  /* Reddit 高保真 — subreddit + 投票按钮 + 评论 thread */
+  /* Reddit · AI 工作流 Agent 场景 */
   reddit: {
     platform: "Reddit",
     subreddit: "r/SaaS",
     subredditSub: { zh: "公开 · 142K 成员", en: "Public · 142K members" },
     author: "u/gtm_anon",
     authorSub: { zh: "Posted by u/gtm_anon · 8h", en: "Posted by u/gtm_anon · 8h" },
-    title: "Perplexity Pro vs ChatGPT Deep Research for GTM teams?",
-    body: "Spent the last 2 weeks running both side-by-side for buyer research and competitor mapping. Curious what others are seeing — does one actually replace the other or is everyone stitching them together?",
+    title: "Anyone using AI agents to actually automate repetitive ops across Slack, Notion and CRM (not just demo)?",
+    body: "We're not looking for another generic agent demo. We need something that can pick up repeated workflows: summarize customer notes, update CRM fields, post into the right Slack channel — and not break the moment permissions change. What's working in production for a 12-person ops team?",
+    bgImage: "/deep-dive/ai-workflow-agent.png",
     flair: "Question",
     score: 312,
     commentCount: 47,
@@ -636,17 +846,17 @@ export const DEEP_DIVES = {
       {
         who: "u/saas_lifer",
         time: { zh: "5h", en: "5h" },
-        text: "Perplexity for sources, GPT for synthesis. Anything outside of that is a fight.",
+        text: "Most agent demos fall apart the moment you need stable permissions + clean CRM writes.",
         score: 184,
         replies: 12,
         depth: 0,
         tone: "user" as const,
       },
       {
-        who: "u/dev_tools_daily",
+        who: "u/dev_ops_daily",
         time: { zh: "4h", en: "4h" },
-        text: "Tested both for 2 weeks. Perplexity wins on citations + speed, GPT wins on synthesis. We use [Product] to stitch them — sources + summary in one doc. Saves us ~3 hours / week per AE. Happy to share the workflow.",
-        score: 312,
+        text: "Ran this exact eval last month for a 12-person ops team. Honest breakdown:\n\n• Zapier / Make — fast to wire, breaks on multi-step CRM logic\n• Generic GPT-agent demos — great in screenshots, terrible at consistent writes\n• Workflow-native AI agent (Slack → summary → Notion → CRM → notify) — ~9 min saved per run, ~1,200 runs/mo\n\nThe wedge is treating the workflow as the unit, not the model.",
+        score: 412,
         replies: 28,
         depth: 0,
         tone: "ai" as const,
@@ -654,23 +864,23 @@ export const DEEP_DIVES = {
       {
         who: "u/founderfrank",
         time: { zh: "3h", en: "3h" },
-        text: "@dev_tools_daily got a link to the workflow? Trying to set this up for our SDR team",
+        text: "Cleanest breakdown in the whole thread — saving the comparison + sharing with our ops lead.",
         score: 64,
         replies: 3,
         depth: 1,
         tone: "user" as const,
       },
     ],
-    aiTag: { zh: "AI 接话 · 已上线", en: "Comment by us · live" },
+    aiTag: { zh: "AI", en: "AI" },
   },
-  /* X (Twitter) 高保真 — 推文 + 4 metrics + 回复 thread */
+  /* X · AI 买家研究 / GTM 定位场景 */
   x: {
     platform: "X",
     handle: "@startup_jenny",
     handleSub: { zh: "Jenny · @startup_jenny", en: "Jenny · @startup_jenny" },
     time: { zh: "2h", en: "2h" },
-    body: "Claude Code vs Cursor for a Next.js monorepo — which ships faster for a 2-person team? Need real numbers, not vibes.",
-    bgImage: "https://picsum.photos/seed/socialrouter-x-ide-monitor/1200/675",
+    body: "Trying to validate an AI research product for GTM teams. Should we position around \u201cAI research agent\u201d, or around \u201cfind competitor demand + buyer pain faster\u201d? Need real angles, not vibes.",
+    bgImage: "/deep-dive/ai-research-stack.png",
     stats: {
       replies: "187",
       reposts: "94",
@@ -682,15 +892,15 @@ export const DEEP_DIVES = {
         who: "@indie_dev",
         verified: false,
         time: { zh: "1h", en: "1h" },
-        text: "we use both — Cursor for tab-complete, Claude Code for multi-file refactors",
+        text: "I'd avoid \u201cAI research agent\u201d. Sounds generic. The real pain is buyer research speed.",
         likes: 64,
         tone: "user" as const,
       },
       {
-        who: "@dev_tools_daily",
+        who: "@gtm_jess",
         verified: true,
         time: { zh: "47 分钟", en: "47m" },
-        text: "[Product] — Cursor for tab-complete, Claude Code for multi-file refactors. Free tier covered our entire MVP. Gist with setup: link 🔗",
+        text: "Position on the outcome, not the model. A/B'd both: \u201cAI research agent\u201d → 1.4% CTR. \u201cFind buyer pain before buying ads\u201d → 6.8% CTR, ~4.8× lift. Outcome > model every time.",
         likes: 401,
         tone: "ai" as const,
       },
@@ -698,12 +908,12 @@ export const DEEP_DIVES = {
         who: "@startup_jenny",
         verified: false,
         time: { zh: "30 分钟", en: "30m" },
-        text: "@dev_tools_daily oh nice — just bookmarked, thanks 🙏",
+        text: "@gtm_jess 4.8× is wild — that's the framing I was looking for. Bookmarked.",
         likes: 28,
         tone: "user" as const,
       },
     ],
-    aiTag: { zh: "AI 接话 · 已上线", en: "Comment by us · live" },
+    aiTag: { zh: "AI", en: "AI" },
   },
 };
 
@@ -862,134 +1072,517 @@ export const CONTENT_EXAMPLES = {
   ],
 };
 
-/* -------------------- Case studies (tabbed) -------------------- */
+/* -------------------- Case studies (tabbed) --------------------
+ * 三个真实案例（客户名脱敏 · NDA 保护）
+ *   1. AI Agent  ─ 海外冷启动 · X / Reddit / YouTube · Waitlist / Demo
+ *   2. AI SaaS   ─ B2B Demo 预约 · YouTube / LinkedIn / X · 销售线索
+ *   3. AI Tool   ─ 创作者试用注册 · TikTok / Instagram / YouTube Shorts · 试用注册
+ *
+ * 数据来源：飞书文档 Case 1/2/3；不在案例卡内伪造精确数字。
+ *           全站通用效果区间统一放在 RESULTS 区块。
+ * ------------------------------------------------------------- */
 export const CASES = {
   eyebrow: { zh: "客户案例", en: "Customer Cases" },
-  heading: { zh: "真实案例，真实增长", en: "Real cases, real growth" },
-  sub: { zh: "每一组数据，都对应可追踪的执行链路。", en: "Every number maps to a trackable execution trace." },
+  heading: { zh: "三类 AI 产品，三种验证目标", en: "Three AI categories, three growth questions" },
+  sub: {
+    zh: "全部数据来自飞书 Sample Results 表格；客户名 NDA 保护，会议中可披露。",
+    en: "All data from Feishu Sample Results; client names NDA, available on call.",
+  },
   tabs: [
+    /* ---------- Case 1 · AI Agent ---------- */
     {
-      id: "software-ai",
-      label: { zh: "软件 / AI", en: "Software / AI" },
-      title: { zh: "某北美 LLM API 路由与聚合平台", en: "A North American LLM API routing & aggregation platform" },
+      id: "ai-agent",
+      label: { zh: "AI Agent", en: "AI Agent" },
+      title: { zh: "AI Agent 海外冷启动测试", en: "AI Agent cold-start in NA / UK" },
       subtitle: {
-        zh: "统一 OpenAI 兼容接口 · 多模型调度与计费 · Reddit / X / Hacker News / GitHub 讨论高度集中",
-        en: "Unified OpenAI-compatible API · multi-model routing & billing · concentrated discussions on Reddit / X / Hacker News / GitHub",
+        zh: "面向知识工作者的 AI Agent · 北美 + 英国市场 · X / Reddit / YouTube 集中讨论",
+        en: "Knowledge-worker AI Agent · North America + UK · concentrated on X / Reddit / YouTube",
       },
       lead: {
-        zh: "选型、比价、fallback、供应商锁定，以及竞品故障后的「替代品」长楼——多是已经要写代码接入的决策现场；回复必须可验证，链到文档与计费口径。",
-        en: "Stack selection, price comparison, fallback, vendor lock-in, and \"alternatives\" threads when competitors go down — most are real integration decisions. Replies must be verifiable and link to docs and billing baselines.",
+        zh: "目标：验证北美和英国是否存在「自动化工作流」真实需求，获取第一批 Waitlist 与 Demo 注册用户。我们扫描竞品讨论、工具推荐与效率工作流相关内容，筛出高意向用户，通过可审核的 Creator Matrix 将用户导向 Waitlist 与 Demo 页面。",
+        en: "Goal: validate real demand for \"workflow automation\" in NA + UK, and capture the first batch of Waitlist / Demo signups. We scanned competitor threads, tool recommendations, and productivity workflow contexts, then routed high-intent users to Waitlist and Demo via a reviewable Creator Matrix.",
       },
       blocks: [
         {
-          title: { zh: "卡点", en: "Bottleneck" },
+          title: { zh: "目标", en: "Objective" },
           body: {
-            zh: "买量能堆注册，但增长团队难向内部证明「讨论 → 文档/控制台 → 付费线索」这条链路；需要可审计的归因与周报，而不是只看产品大盘曲线。",
-            en: "Paid acquisition stacks signups, but growth teams can't prove the \"discussion → docs/console → paid lead\" chain internally. Auditable attribution beats top-line curves.",
+            zh: "验证北美和英国市场是否存在自动化工作流需求，并获取第一批 Waitlist / 试用注册用户。",
+            en: "Validate whether NA and UK markets show demand for automated workflows, and capture the first Waitlist / trial users.",
           },
         },
         {
-          title: { zh: "人去哪吵", en: "Where the demand lives" },
+          title: { zh: "人去哪吵", en: "Where demand lives" },
           body: {
-            zh: "机器学习 / 本地大模型子版、HN、GitHub Discussions；竞品安全事件窗口期会出现集中的「迁移 / 替代」讨论（监测期可见）。",
-            en: "ML / local-LLM subs, HN, GitHub Discussions; concentrated \"migration / replacement\" threads emerge during competitor incident windows (visible during the monitoring window).",
+            zh: "X、Reddit、YouTube 上的竞品讨论、工具推荐和效率工作流相关内容。",
+            en: "Competitor discussions, tool recommendations and productivity workflow content on X, Reddit and YouTube.",
           },
         },
         {
-          title: { zh: "我们怎么干", en: "What we did" },
+          title: { zh: "关键发现", en: "Key finding" },
           body: {
-            zh: "锚定速率限制、账单字段与官方文档深链，少用口号；对比帖里给可复现路径。按人群分桶话术：个人开发者 · Agent / 系统自动集成、面向下游收费的 SaaS。周报纳入站外讨论热度与流量样本（第三方监测），砍掉只蹭梗、不进控制台的楼层。",
-            en: "Anchor on rate-limit copy, billing fields, and deep links to official docs — minimize slogans. In comparison threads we give a reproducible path. Persona-bucketed messaging: indie devs · Agent / auto-integrations · downstream-billed SaaS. Weeklies include off-site discussion temperature & traffic samples (third-party monitored). We cut floors that only ride memes but never reach the console.",
+            zh: "用户对「自动化重复工作流」的兴趣高于「通用 AI Agent」概念。下一阶段建议聚焦 Reddit + YouTube，围绕工具集成、重复任务自动化和竞品替代场景持续放大。",
+            en: "Users showed stronger interest in “automated repetitive workflows” than in the generic “AI Agent” concept. Next phase: focus Reddit + YouTube around tool integration, repetitive-task automation and competitor-replacement scenarios.",
           },
         },
       ],
       stats: [
-        { value: "95万", label: { zh: "注册用户", en: "registered users" }, accent: "primary" },
-        { value: "32.72万", label: { zh: "持续调用（调用率 34.44%）", en: "monthly active callers (34.44% activation)" }, accent: "primary" },
-        { value: "7.96万", label: { zh: "付费用户（付费率 24.33%）", en: "paid users (24.33% paid rate)" }, accent: "primary" },
+        { value: "10,000", unit: { zh: "条", en: "" }, label: { zh: "触达内容生成", en: "Outreach content generated" }, highlight: true },
+        { value: "131", unit: { zh: "个", en: "" }, label: { zh: "Waitlist / 试用注册", en: "Waitlist / trial signups" }, highlight: true },
+        { value: "Reddit + YouTube", unit: { zh: "", en: "" }, label: { zh: "最优平台", en: "Top platforms" }, highlight: true },
+        { value: "7", unit: { zh: "天", en: "days" }, label: { zh: "测试时间", en: "Test duration" } },
+        { value: "23", unit: { zh: "个", en: "" }, label: { zh: "高意向场景", en: "High-intent contexts" } },
+        { value: "8,600", unit: { zh: "次", en: "" }, label: { zh: "合格触达", en: "Qualified touches" } },
+        { value: "1,600", unit: { zh: "次", en: "" }, label: { zh: "UTM 点击", en: "UTM clicks" } },
+        { value: "74", unit: { zh: "条", en: "" }, label: { zh: "用户反馈", en: "User feedback" } },
       ],
       quote: {
         text: {
-          zh: "竞品出事那几周「替代品」帖子的讨论井喷，我们和 SocialRouter 一起把技术约束和首笔付费调用的入口讲清楚——评论真的把人带到了控制台、注册、充值。这不是曝光数据，是真实增长。",
-          en: "During competitor outage weeks, alternatives threads spiked. SocialRouter helped us turn those comments into real signups, first paid API calls, and recharge conversion — not impressions.",
+          zh: "案例重点不是证明「通用 AI Agent」受欢迎，而是识别出用户真正愿意响应的需求表达：自动化重复工作流。131 个 Waitlist / 试用注册都来自这条线索。",
+          en: "The case didn't prove generic “AI Agent” demand. It identified the real signal users responded to: automating repetitive workflows. All 131 Waitlist / trial signups came from that thread.",
         },
-        author: { zh: "Head of Growth · 北美 LLM API 网关平台（NDA 保护，会议中可披露）", en: "Head of Growth · North American LLM API gateway (NDA, available on call)" },
+        author: { zh: "Founder · 北美 AI Agent 团队（NDA 保护，会议中可披露）", en: "Founder · NA-based AI Agent team (NDA, available on call)" },
       },
     },
+    /* ---------- Case 2 · AI SaaS ---------- */
     {
-      id: "dtc-b2b",
-      label: { zh: "DTC / B2B", en: "DTC / B2B" },
-      title: { zh: "某北美 DTC 智能硬件品牌", en: "A North American DTC smart-hardware brand" },
+      id: "ai-saas",
+      label: { zh: "AI SaaS", en: "AI SaaS" },
+      title: { zh: "AI SaaS Demo 预约测试", en: "AI SaaS demo-booking test" },
       subtitle: {
-        zh: "中高客单 · 长决策周期 · TikTok / Instagram / YouTube / Reddit 评测帖高度集中",
-        en: "Mid-high AOV · long decision cycle · concentrated review threads on TikTok / Instagram / YouTube / Reddit",
+        zh: "面向中小企业销售团队的 AI SaaS · 北美 B2B · YouTube / LinkedIn / X 集中讨论",
+        en: "AI SaaS for SMB sales teams · North America B2B · concentrated on YouTube / LinkedIn / X",
       },
       lead: {
-        zh: "用户在测评帖、对比视频、Reddit 选型楼里反复问「真的值这个价吗 / 退货政策怎样 / 比 X 强在哪」——这是已经在做最后决策的人群，回复必须给到可验证的对比与售后细节。",
-        en: "Buyers ask \"is it worth the price / what's the return policy / how is it better than X\" in review posts, comparison videos, and Reddit selection threads — these are users at final-decision stage. Replies must give verifiable comparisons and after-sales details.",
+        zh: "目标：验证北美 B2B 用户是否愿意从社媒讨论进入 Demo 预约页面，并获取第一批销售线索。我们扫描销售自动化、CRM、AI sales assistant、lead management 相关讨论，筛出有明确购买意向的用户，通过可审核的 Creator Matrix 引导至 Demo 预约页面。",
+        en: "Goal: validate whether NA B2B users will move from social conversations to a Demo-booking page, and capture the first batch of sales leads. We scanned sales-automation, CRM, AI sales assistant, and lead-management discussions, qualified buying-intent users, and routed them to the Demo page via a reviewable Creator Matrix.",
       },
       blocks: [
         {
-          title: { zh: "卡点", en: "Bottleneck" },
+          title: { zh: "目标", en: "Objective" },
           body: {
-            zh: "广告 ROI 见顶，retargeting 触达的还是同一批人；新用户多在评测视频与 Reddit 选型楼里完成「最后一公里」，但品牌账号下场答疑会显得在打广告。",
-            en: "Paid ROI plateaued — retargeting hits the same cohort. New buyers finish their \"last mile\" inside review videos and Reddit threads, but brand replies feel like ads.",
+            zh: "验证北美 B2B 用户是否愿意从社媒讨论进入 Demo 预约页面，并获取第一批销售线索。",
+            en: "Validate whether NA B2B users are willing to move from social discussions into a Demo-booking page, and capture the first sales leads.",
           },
         },
         {
-          title: { zh: "人去哪吵", en: "Where the demand lives" },
+          title: { zh: "人去哪吵", en: "Where demand lives" },
           body: {
-            zh: "YouTube 测评视频的评论区、TikTok 高赞对比视频、r/smarthome 与产品类 sub 的选型楼，以及 Instagram 测评号的提问区。",
-            en: "YouTube review comment sections, TikTok high-engagement comparison videos, r/smarthome and product subs, and IG review-account Q&A surfaces.",
+            zh: "YouTube、LinkedIn、X 上围绕销售自动化、CRM、AI sales assistant 和 lead management 的相关讨论。",
+            en: "YouTube, LinkedIn and X discussions around sales automation, CRM, AI sales assistant and lead management.",
           },
         },
         {
-          title: { zh: "我们怎么干", en: "What we did" },
+          title: { zh: "关键发现", en: "Key finding" },
           body: {
-            zh: "用 KOC / 素人口吻在评测下场答疑：对比维度具体到型号与配件、给退货链路、给售后联系方式。话术按用户阶段分层：第一次接触 vs 在比较中 vs 已经下单但犹豫退。每周复盘哪些评测视频带来了「评论 → 落地页 → 加购」全链路，下一周加码。",
-            en: "KOC / creator voices answer questions inside review threads: spec-level comparisons, return path, after-sales contact. Messaging tiered by stage: first-touch vs comparing vs already-ordered-but-hesitating. Weeklies map which review videos drove the full \"comment → LP → add-to-cart\" path; the next week we double down on the winners.",
+            zh: "用户对「减少销售跟进遗漏」「提升线索响应速度」「自动生成 follow-up」的兴趣高于泛泛的「AI sales tool」。下一阶段建议聚焦 YouTube + LinkedIn，围绕 CRM 集成、销售跟进自动化和小团队销售效率持续放大。",
+            en: "Users showed stronger interest in “reducing missed follow-ups”, “faster lead response” and “auto-generated follow-ups” than in generic “AI sales tool” framing. Next phase: focus YouTube + LinkedIn around CRM integration, sales follow-up automation and small-team sales efficiency.",
           },
         },
       ],
       stats: [
-        { value: "640+", label: { zh: "评测视频触达", en: "review videos reached" }, accent: "primary" },
-        { value: "12.4%", label: { zh: "评论 → 进站点击率", en: "comment → site CTR" }, accent: "primary" },
-        { value: "3.2x", label: { zh: "加购率（对比纯广告人群）", en: "add-to-cart vs ads-only cohort" }, accent: "primary" },
+        { value: "27", unit: { zh: "个", en: "" }, label: { zh: "Demo 预约", en: "Demo bookings" }, highlight: true },
+        { value: "14", unit: { zh: "个", en: "" }, label: { zh: "合格销售线索", en: "Qualified sales leads" }, highlight: true },
+        { value: "4.40", unit: { zh: "%", en: "%" }, label: { zh: "点击 → Demo 预约 转化率", en: "Click → Demo booking rate" }, highlight: true },
+        { value: "7", unit: { zh: "天", en: "days" }, label: { zh: "测试时间", en: "Test duration" } },
+        { value: "18", unit: { zh: "个", en: "" }, label: { zh: "核心高意向场景", en: "High-intent contexts" } },
+        { value: "4,200", unit: { zh: "次", en: "" }, label: { zh: "合格触达", en: "Qualified touches" } },
+        { value: "620", unit: { zh: "次", en: "" }, label: { zh: "UTM 点击", en: "UTM clicks" } },
+        { value: "52", unit: { zh: "条", en: "" }, label: { zh: "用户反馈", en: "User feedback" } },
+        { value: "YouTube + LinkedIn", unit: { zh: "", en: "" }, label: { zh: "最优平台", en: "Top platforms" } },
       ],
       quote: {
         text: {
-          zh: "以前我们不敢在测评视频下用品牌账号回复，怕看起来像广告。SocialRouter 用 KOC 的口吻把对比维度和退货政策讲清楚，最后变成评论区点赞最多的那条回复——这一季度退货率没涨，加购率却明显上去。",
-          en: "We used to be afraid to comment with our brand account on review videos — felt too ad-like. SocialRouter's KOC voice laid out comparisons and return policy clearly and became the top-liked reply. Returns held flat, add-to-cart went up.",
+          zh: "把「AI sales tool」拆成销售跟进遗漏、线索响应速度、自动 follow-up 三类具体场景后，4,200 次合格触达带来了 27 个真实 Demo 预约和 14 个合格销售线索。",
+          en: "After breaking “AI sales tool” into missed follow-ups, lead response speed and auto follow-ups, 4,200 qualified touches produced 27 real Demo bookings and 14 qualified leads.",
         },
-        author: { zh: "Head of Growth · 北美 DTC 智能硬件品牌（NDA 保护）", en: "Head of Growth · North American DTC smart-hardware brand (NDA)" },
+        author: { zh: "Head of Growth · 北美 AI SaaS 销售工具（NDA 保护，会议中可披露）", en: "Head of Growth · NA AI sales SaaS (NDA, available on call)" },
+      },
+    },
+    /* ---------- Case 3 · AI Tool ---------- */
+    {
+      id: "ai-tool",
+      label: { zh: "AI Tool", en: "AI Tool" },
+      title: { zh: "AI Tool 试用注册测试", en: "AI Tool trial-signup test" },
+      subtitle: {
+        zh: "面向创作者与营销团队的 AI Tool · 美国 + 东南亚 · TikTok / Instagram / YouTube Shorts 集中讨论",
+        en: "AI Tool for creators & marketing teams · US + SEA · concentrated on TikTok / Instagram / YouTube Shorts",
+      },
+      lead: {
+        zh: "目标：验证美国与东南亚市场是否存在内容生成需求，通过短视频与社媒讨论场景获取试用注册用户。我们扫描工具推荐、内容创作教程、AI video tool 对比、creator workflow 等场景，经过 4 轮话术与落地页迭代，将高意向用户引导至产品试用页。",
+        en: "Goal: validate content-generation demand in US + SEA, and acquire trial signups through short-video and social conversations. We scanned tool recommendations, creator tutorials, AI video tool comparisons, and creator-workflow contexts, then iterated through 4 rounds of messaging + LP to route high-intent users to the trial page.",
+      },
+      blocks: [
+        {
+          title: { zh: "目标", en: "Objective" },
+          body: {
+            zh: "验证美国和东南亚市场是否存在内容生成需求，并通过短视频和社媒讨论场景获取试用注册用户。",
+            en: "Validate content-generation demand in the US and Southeast Asia, and acquire trial signups through short-video and social-discussion contexts.",
+          },
+        },
+        {
+          title: { zh: "人去哪吵", en: "Where demand lives" },
+          body: {
+            zh: "TikTok、Instagram、YouTube Shorts 上的工具推荐、内容创作教程、AI video tool 对比和 creator workflow 场景。",
+            en: "Tool recommendations, content-creation tutorials, AI video tool comparisons and creator-workflow contexts across TikTok, Instagram and YouTube Shorts.",
+          },
+        },
+        {
+          title: { zh: "关键发现", en: "Key finding" },
+          body: {
+            zh: "用户对「可直接使用的短视频脚本模板」的兴趣高于泛泛的「AI 内容生成」。经过 4 轮话术与落地页迭代后，下一阶段建议聚焦 YouTube Shorts + TikTok，围绕 TikTok / Reels / Shorts 脚本模板、广告文案优化和多平台内容生产持续放大。",
+            en: "Users showed stronger interest in “ready-to-use short-video script templates” than in generic “AI content generation”. After 4 rounds of messaging and landing-page iteration, the next phase should focus YouTube Shorts + TikTok around TikTok / Reels / Shorts script templates, ad-copy optimization and multi-platform production.",
+          },
+        },
+      ],
+      stats: [
+        { value: "13,800", unit: { zh: "个", en: "" }, label: { zh: "Trial Signup", en: "Trial signups" }, highlight: true },
+        { value: "32.90", unit: { zh: "%", en: "%" }, label: { zh: "UTM 点击 → Trial 转化率", en: "Click → Trial conversion" }, highlight: true },
+        { value: "100,000", unit: { zh: "次", en: "" }, label: { zh: "合格触达", en: "Qualified touches" }, highlight: true },
+        { value: "21", unit: { zh: "天", en: "days" }, label: { zh: "测试周期", en: "Test duration" } },
+        { value: "4", unit: { zh: "轮", en: "rounds" }, label: { zh: "话术 / 落地页迭代", en: "Messaging + LP iterations" } },
+        { value: "86", unit: { zh: "个", en: "" }, label: { zh: "核心高意向场景", en: "High-intent contexts" } },
+        { value: "42,000", unit: { zh: "次", en: "" }, label: { zh: "UTM 点击", en: "UTM clicks" } },
+        { value: "36,000", unit: { zh: "次", en: "" }, label: { zh: "官网访问", en: "Site visits" } },
+        { value: "1,860", unit: { zh: "条", en: "" }, label: { zh: "用户反馈", en: "User feedback" } },
+        { value: "YouTube Shorts + TikTok", unit: { zh: "", en: "" }, label: { zh: "最优平台", en: "Top platforms" } },
+      ],
+      quote: {
+        text: {
+          zh: "21 天 + 4 轮话术 / 落地页迭代，10 万次合格触达带来 36,000 次官网访问和 13,800 个 Trial Signup，UTM 点击到 Trial 的转化率做到 32.90%。",
+          en: "Over 21 days and 4 rounds of messaging + LP iteration, 100K qualified touches drove 36K site visits and 13,800 Trial signups, with a 32.90% click → Trial conversion rate.",
+        },
+        author: { zh: "Founder · 美国 + 东南亚 AI Tool 团队（NDA 保护，会议中可披露）", en: "Founder · US + SEA AI Tool team (NDA, available on call)" },
       },
     },
   ],
 };
 
-/* -------------------- Acquisition results -------------------- */
-export const RESULTS = {
-  eyebrow: { zh: "获客效果", en: "Acquisition Results" },
+/* -------------------- Case Comparison --------------------
+ * 三案例横向对比表 — 销售视角：一眼判断哪类 case 最接近客户产品
+ * 数据全部来自飞书 Case 1 / 2 / 3 Sample Results 表格
+ * --------------------------------------------------------- */
+export const CASE_COMPARISON = {
+  eyebrow: { zh: "三案例横向对比", en: "Side-by-side comparison" },
   heading: {
-    zh: "每 10,000 条精准评论 / 回复\n带来 1,000–3,000 个进站用户",
-    en: "Every 10,000 targeted comments / replies\nbring 1,000–3,000 site visitors",
+    zh: "三类 AI 产品，同维度数据并列对比",
+    en: "Three AI products, compared metric by metric",
   },
-  sub: { zh: "产品、行业略有差距。", en: "Numbers vary by product and category." },
+  sub: {
+    zh: "三个真实案例同一行对比，一眼判断哪类最接近你的产品。",
+    en: "Three real cases compared row by row — find the closest match to your product.",
+  },
+  cases: [
+    { id: "ai-agent", label: { zh: "AI Agent", en: "AI Agent" }, sub: { zh: "海外冷启动", en: "Cold-start" } },
+    { id: "ai-saas", label: { zh: "AI SaaS", en: "AI SaaS" }, sub: { zh: "B2B Demo 预约", en: "Demo booking" } },
+    { id: "ai-tool", label: { zh: "AI Tool", en: "AI Tool" }, sub: { zh: "创作者试用注册", en: "Trial signup" } },
+  ],
+  rows: [
+    {
+      key: "duration",
+      label: { zh: "测试周期", en: "Test duration" },
+      values: [
+        { zh: "7 天", en: "7 days" },
+        { zh: "7 天", en: "7 days" },
+        { zh: "21 天 · 4 轮迭代", en: "21 days · 4 iterations" },
+      ],
+    },
+    {
+      key: "contexts",
+      label: { zh: "高意向场景", en: "High-intent contexts" },
+      values: [
+        { zh: "23 个", en: "23" },
+        { zh: "18 个", en: "18" },
+        { zh: "86 个", en: "86" },
+      ],
+    },
+    {
+      key: "touches",
+      label: { zh: "合格触达", en: "Qualified touches" },
+      values: [
+        { zh: "8,600 次", en: "8,600" },
+        { zh: "4,200 次", en: "4,200" },
+        { zh: "100,000 次", en: "100,000" },
+      ],
+    },
+    {
+      key: "clicks",
+      label: { zh: "UTM 点击", en: "UTM clicks" },
+      values: [
+        { zh: "1,600 次", en: "1,600" },
+        { zh: "620 次", en: "620" },
+        { zh: "42,000 次", en: "42,000" },
+      ],
+    },
+    {
+      key: "site-visits",
+      label: { zh: "官网访问", en: "Site visits" },
+      values: [
+        { zh: "—", en: "—" },
+        { zh: "—", en: "—" },
+        { zh: "36,000 次", en: "36,000" },
+      ],
+    },
+    {
+      key: "primary-conversion",
+      label: { zh: "核心转化", en: "Primary conversion" },
+      values: [
+        { zh: "131 Waitlist / 试用", en: "131 Waitlist / trial" },
+        { zh: "27 Demo + 14 销售线索", en: "27 Demo + 14 leads" },
+        { zh: "13,800 Trial Signup", en: "13,800 Trial signups" },
+      ],
+      highlight: true,
+    },
+    {
+      key: "rate",
+      label: { zh: "点击 → 转化率", en: "Click → conversion rate" },
+      values: [
+        { zh: "—", en: "—" },
+        { zh: "4.40%", en: "4.40%" },
+        { zh: "32.90%", en: "32.90%" },
+      ],
+      highlight: true,
+    },
+    {
+      key: "feedback",
+      label: { zh: "用户反馈", en: "User feedback" },
+      values: [
+        { zh: "74 条", en: "74" },
+        { zh: "52 条", en: "52" },
+        { zh: "1,860 条", en: "1,860" },
+      ],
+    },
+    {
+      key: "platforms",
+      label: { zh: "最优放大平台", en: "Top platforms" },
+      values: [
+        { zh: "Reddit + YouTube", en: "Reddit + YouTube" },
+        { zh: "YouTube + LinkedIn", en: "YouTube + LinkedIn" },
+        { zh: "YouTube Shorts + TikTok", en: "YouTube Shorts + TikTok" },
+      ],
+    },
+  ],
+  footnote: {
+    zh: "「—」表示该案例飞书表格中无对应字段，并不代表该指标为 0。",
+    en: "An em-dash means that field is not present in the Feishu table for that case — not that the metric is zero.",
+  },
+};
+
+/* -------------------- Acquisition results --------------------
+ * 第 6 屏（真实数据与效果证明）
+ * 组成：顶部大数字 + Proof Gallery 截图墙 + Dashboard 说明
+ *   以下 RESULTS 负责「顶部大数字 + 交付产物」两件事
+ * ------------------------------------------------------------- */
+export const RESULTS = {
+  eyebrow: { zh: "三案例累计实测", en: "Aggregated real results" },
+  heading: {
+    zh: "三案例累计实测",
+    en: "Aggregated real numbers",
+  },
+  sub: {
+    zh: "三个真实案例飞书 Sample Results 表格累计求和，不做估算。",
+    en: "Direct sum across three real Feishu Sample Results tables — no estimates.",
+  },
   primary: [
-    { value: "10–30%", label: { zh: "进站率", en: "site CTR" } },
-    { value: "$1–3",   label: { zh: "单用户获取成本", en: "cost per visitor" } },
-    { value: "15–30%", label: { zh: "注册率 / 询盘率", en: "signup / inquiry rate" } },
-    { value: "1/10",    label: { zh: "仅为传统广告成本", en: "vs traditional ad cost" } },
+    { value: "112,800", label: { zh: "累计合格触达", en: "Qualified touches" } },
+    { value: "44,220",  label: { zh: "累计 UTM 点击", en: "UTM clicks" } },
+    { value: "13,958",  label: { zh: "累计 Waitlist / Demo / Trial", en: "Total signups" } },
+    { value: "1,986",   label: { zh: "累计用户反馈", en: "User feedback" } },
   ],
   highlight: [
-    { value: "96%",   label: { zh: "客户满意度", en: "client satisfaction" } },
-    { value: "600%+", label: { zh: "代表性项目 ROI 峰值", en: "peak ROI on flagship projects" } },
+    { value: "32.90%", label: { zh: "AI Tool · UTM → Trial 转化率", en: "AI Tool · Click → Trial rate" } },
+    { value: "4.40%",  label: { zh: "AI SaaS · Click → Demo 转化率", en: "AI SaaS · Click → Demo rate" } },
   ],
   deliverables: [
     { zh: "用户高频痛点与核心诉求", en: "User pain points & core asks" },
     { zh: "优先放大的市场与平台", en: "Markets & platforms to scale" },
     { zh: "高引流 / 高转化关键词", en: "High-traffic / high-conversion keywords" },
     { zh: "高价值竞品场景与切入方向", en: "High-value competitor contexts & entry angles" },
+  ],
+};
+
+/* -------------------- Proof Gallery (效果截图墙) --------------------
+ * 第 6.2 屏：4 组真实截图（飞书文档里已有原始素材）。
+ * 使用方式：用户下载飞书里的截图后，按以下路径放入 web/public/screenshots/
+ *   代码会自动加载；文件不存在时呈现占位。
+ * -------------------------------------------------------------------- */
+export const PROOF_GALLERY = {
+  eyebrow: { zh: "效果截图", en: "Proof gallery" },
+  heading: { zh: "从触达到询盘，结果可被看见", en: "From outreach to inquiry, results you can see" },
+  sub: {
+    zh: "真实项目截图（客户名 NDA 保护），每类 2–3 张代表性素材。",
+    en: "Real engagement screenshots (client names under NDA), 2–3 per category.",
+  },
+  groups: [
+    {
+      key: "tiktok-inquiry",
+      label: { zh: "TikTok 询盘量", en: "TikTok Inquiry Signals" },
+      desc: {
+        zh: "短视频评论区里被 SocialRouter 触发的询盘 / 试用 / 加好友信号。",
+        en: "Inquiry / trial / DM-add signals triggered by SocialRouter inside TikTok comment threads.",
+      },
+      images: [
+        "/screenshots/tiktok-inquiry-1.png",
+        "/screenshots/tiktok-inquiry-2.png",
+        "/screenshots/tiktok-inquiry-3.png",
+      ],
+    },
+    {
+      key: "instagram-inquiry",
+      label: { zh: "Instagram 询盘量", en: "Instagram Inquiry Signals" },
+      desc: {
+        zh: "Instagram 帖子 / Reels 下方的高意向询问与私信意向。",
+        en: "High-intent questions and DM signals under Instagram posts and Reels.",
+      },
+      images: [
+        "/screenshots/ig-inquiry-1.png",
+        "/screenshots/ig-inquiry-2.png",
+        "/screenshots/ig-inquiry-3.png",
+      ],
+    },
+    {
+      key: "instagram-reach",
+      label: { zh: "Instagram 曝光量", en: "Instagram Reach Signals" },
+      desc: {
+        zh: "通过精准场景介入获得的自然曝光、互动与收藏数据。",
+        en: "Organic reach, engagement and saves earned through context-driven engagement.",
+      },
+      images: [
+        "/screenshots/ig-reach-1.png",
+        "/screenshots/ig-reach-2.png",
+        "/screenshots/ig-reach-3.png",
+      ],
+    },
+    {
+      key: "dashboard",
+      label: { zh: "执行 Dashboard", en: "Execution Dashboard" },
+      desc: {
+        zh: "客户实时可见的执行 / 触达 / 进站 / 询盘看板。",
+        en: "Real-time dashboard \u2014 execution / reach / site visits / inquiries.",
+      },
+      images: [
+        "/screenshots/dashboard-1.png",
+        "/screenshots/dashboard-2.png",
+      ],
+    },
+  ],
+};
+
+/* -------------------- Product Results (三类产品结果卡) --------------------
+ * 第 6.3 屏：不同 AI 产品验证的是不同增长问题
+ * 数据来源：飞书 Case 1/2/3 三个真实案例的「关键结论」
+ * ------------------------------------------------------------------------- */
+export const PRODUCT_RESULTS = {
+  eyebrow: { zh: "三类产品结果", en: "Three categories, three outcomes" },
+  heading: {
+    zh: "不同 AI 产品，验证的是不同增长结果",
+    en: "Different AI products, different growth signals",
+  },
+  sub: {
+    zh: "AI Agent / AI SaaS / AI Tool 三类案例，要验证的增长问题完全不同。",
+    en: "AI Agent / AI SaaS / AI Tool — each validates a different growth question.",
+  },
+  items: [
+    {
+      tag: "AI Agent",
+      goal: { zh: "Waitlist / Demo", en: "Waitlist / Demo" },
+      finding: {
+        zh: "用户更关心「自动化重复工作流」，而不是泛泛的「通用 AI Agent」。",
+        en: "Users care about \u201cautomating repetitive workflows\u201d \u2014 not generic \u201cAI Agent\u201d framing.",
+      },
+      scale: { zh: "建议放大：Reddit + YouTube", en: "Scale: Reddit + YouTube" },
+      kpi: {
+        primary: {
+          value: "131",
+          unit: { zh: "个", en: "" },
+          label: { zh: "Waitlist / 试用注册", en: "Waitlist / trial signups" },
+        },
+        secondary: {
+          value: "8,600",
+          unit: { zh: "次", en: "" },
+          label: { zh: "合格触达", en: "Qualified touches" },
+        },
+        cycle: { zh: "7 天测试", en: "7-day test" },
+      },
+    },
+    {
+      tag: "AI SaaS",
+      goal: { zh: "Demo 预约 / 销售线索", en: "Demo / Sales leads" },
+      finding: {
+        zh: "用户更关心「减少销售跟进遗漏」「提升线索响应速度」「自动生成 follow-up」，而不是泛泛的「AI sales tool」。",
+        en: "Users care about \u201creducing follow-up misses\u201d, \u201cfaster lead response\u201d, \u201cauto-generated follow-ups\u201d \u2014 not generic \u201cAI sales tool\u201d.",
+      },
+      scale: { zh: "建议放大：YouTube + LinkedIn", en: "Scale: YouTube + LinkedIn" },
+      kpi: {
+        primary: {
+          value: "27",
+          unit: { zh: "个", en: "" },
+          label: { zh: "Demo 预约", en: "Demo bookings" },
+        },
+        secondary: {
+          value: "4.40",
+          unit: { zh: "%", en: "%" },
+          label: { zh: "点击 → Demo 预约 转化率", en: "Click → Demo rate" },
+        },
+        cycle: { zh: "7 天测试", en: "7-day test" },
+      },
+    },
+    {
+      tag: "AI Tool",
+      goal: { zh: "试用注册", en: "Trial signups" },
+      finding: {
+        zh: "用户更关心「可直接使用的短视频脚本模板」，而不是泛泛的「AI 内容生成」。",
+        en: "Users care about \u201cready-to-use short-video script templates\u201d \u2014 not generic \u201cAI content generation\u201d.",
+      },
+      scale: { zh: "建议放大：YouTube Shorts + TikTok", en: "Scale: YouTube Shorts + TikTok" },
+      kpi: {
+        primary: {
+          value: "13,800",
+          unit: { zh: "个", en: "" },
+          label: { zh: "Trial Signup", en: "Trial signups" },
+        },
+        secondary: {
+          value: "32.90",
+          unit: { zh: "%", en: "%" },
+          label: { zh: "UTM 点击 → Trial 转化率", en: "Click → Trial rate" },
+        },
+        cycle: { zh: "21 天 · 4 轮迭代", en: "21 days · 4 iterations" },
+      },
+    },
+  ],
+};
+
+/* -------------------- Dashboard Note --------------------
+ * 第 6.4 屏：Dashboard 说明。不只看执行量，更看增长判断。
+ * --------------------------------------------------------- */
+export const DASHBOARD_NOTE = {
+  eyebrow: { zh: "Dashboard", en: "Dashboard" },
+  heading: {
+    zh: "Dashboard 不只看执行量，更看增长判断",
+    en: "Dashboards aren't just execution counters \u2014 they're growth decisions",
+  },
+  sub: {
+    zh: "创业者看：能不能获客 / 多便宜 / 能不能转收入。VC 看：市场是否真实 / 是否可放大 / 模型是否健康。",
+    en: "Founders watch: acquire / how cheap / convert to revenue. VCs watch: real market / scalable / healthy model.",
+  },
+  founderMetrics: {
+    title: { zh: "创业者关注", en: "Founders watch" },
+    items: [
+      { zh: "能不能获客", en: "Can we acquire users" },
+      { zh: "获客贵不贵", en: "How cheap is acquisition" },
+      { zh: "能不能转化成收入", en: "Does it convert to revenue" },
+    ],
+  },
+  vcMetrics: {
+    title: { zh: "VC 关注", en: "VCs watch" },
+    items: [
+      { zh: "市场是否真实", en: "Is the market real" },
+      { zh: "增长是否可放大", en: "Is growth scalable" },
+      { zh: "商业模型是否健康", en: "Is the model healthy" },
+    ],
+  },
+  ctas: [
+    { label: { zh: "查看 Demo Dashboard", en: "See Demo Dashboard" }, href: "/apply" },
+    { label: { zh: "申请 7\u201314 天测试方案", en: "Apply for the 7\u201314 day test" }, href: "/apply" },
   ],
 };
 
@@ -1155,16 +1748,18 @@ export const FORM = {
 
 /* -------------------- Final CTA (homepage bottom) -------------------- */
 export const FINAL_CTA = {
-  eyebrow: { zh: "下一步", en: "Next step" },
+  eyebrow: { zh: "谁适合做，怎么开始", en: "Who it's for · How to start" },
+  /* 飞书第 7 屏标题 */
   heading: {
-    zh: "用 7–14 天，判断 SocialRouter 是否适合你的海外增长",
-    en: "Find out whether SocialRouter fits your global GTM in 7–14 days",
+    zh: "让我们帮你测一轮：海外社媒里有没有正在找你的人",
+    en: "Let us run one round: see if anyone on global social is already looking for you",
   },
+  /* 飞书第 7 屏正文 + 最终 CTA 正文（合并表述） */
   body: {
-    zh: "提交基础产品信息，我们团队会评估适配度，再提供定制化测试方案建议。",
-    en: "Submit your basic product info — our team will evaluate fit and recommend a custom testing path.",
+    zh: "提交你的产品官网、目标市场和竞品链接。我们会先判断你的产品是否适合 SocialRouter，再给你建议测试方案。如果适合测试，团队会通过微信或 WhatsApp 联系你。",
+    en: "Submit your product website, target market and competitor links. We'll first evaluate whether your product fits SocialRouter, then propose a recommended test plan. If it's a fit, our team will reach out via WeChat or WhatsApp.",
   },
-  primary: { zh: "申请测试方案", en: "Apply for Signal Test" },
+  primary: { zh: "提交，获取测试建议", en: "Submit for testing advice" },
   secondary: { zh: "先看常见问题", en: "Read FAQ first" },
 };
 

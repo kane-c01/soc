@@ -15,7 +15,7 @@ export function FinalCTA() {
   const { t } = useLang();
 
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className="relative py-16 sm:py-20">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -30,13 +30,13 @@ export function FinalCTA() {
             className="pointer-events-none absolute -top-32 -right-20 size-72 rounded-full bg-sr-red/20 blur-3xl"
           />
 
-          <div className="relative flex flex-col items-center px-8 py-14 text-center sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+          <div className="relative flex flex-col items-center px-8 py-12 text-center sm:px-10 sm:py-14 lg:px-14 lg:py-16">
             <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.2em] text-white/65">
               <span className="h-px w-6 bg-sr-red" />
               {t(FINAL_CTA.eyebrow)}
             </span>
 
-            <h2 className="mt-6 text-balance text-3xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-4xl lg:text-5xl">
+            <h2 className="mt-5 text-balance text-2xl font-semibold leading-tight tracking-[-0.02em] text-white sm:text-3xl lg:text-[40px] lg:leading-[1.15]">
               {t(FINAL_CTA.heading)}
             </h2>
 

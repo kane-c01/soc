@@ -14,7 +14,7 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-24 sm:py-32">
+    <section id="faq" className="relative py-16 sm:py-20">
       <Container>
         <SectionHeader
           eyebrow={t(FAQ_DATA.eyebrow)}
