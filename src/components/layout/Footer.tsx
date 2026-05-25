@@ -1,9 +1,11 @@
 "use client";
 
+import { Globe } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { FOOTER } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
   const { t, lang, toggle } = useLang();
@@ -19,12 +21,31 @@ export function Footer() {
           </p>
           <button
             onClick={toggle}
-            className="mt-6 inline-flex h-9 items-center gap-1 rounded-lg border border-sr-line-2 bg-white px-3 text-xs font-medium text-sr-text-2 transition hover:bg-sr-bg-3 hover:text-sr-text"
+            className="group mt-5 inline-flex items-center gap-2 text-xs font-medium text-sr-muted transition"
             aria-label="Toggle language"
           >
-            <span className={lang === "zh" ? "text-sr-text" : ""}>中文</span>
-            <span className="text-sr-muted mx-1">/</span>
-            <span className={lang === "en" ? "text-sr-text" : ""}>English</span>
+            <Globe className="size-3.5 text-sr-muted transition group-hover:text-sr-text-2" />
+            <span
+              className={cn(
+                "transition",
+                lang === "zh"
+                  ? "font-semibold text-sr-text"
+                  : "text-sr-muted group-hover:text-sr-text-2",
+              )}
+            >
+              中文
+            </span>
+            <span className="text-sr-line">·</span>
+            <span
+              className={cn(
+                "transition",
+                lang === "en"
+                  ? "font-semibold text-sr-text"
+                  : "text-sr-muted group-hover:text-sr-text-2",
+              )}
+            >
+              English
+            </span>
           </button>
         </div>
 
