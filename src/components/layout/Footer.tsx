@@ -5,9 +5,10 @@ import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { FOOTER } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
-  const { t, lang } = useLang();
+  const { t, lang, setLang } = useLang();
 
   return (
     <footer className="relative mt-20 border-t border-sr-line bg-sr-bg-3/45">
@@ -18,9 +19,44 @@ export function Footer() {
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-sr-text-2">
             {t(FOOTER.tagline)}
           </p>
-          <div className="mt-5 inline-flex items-center gap-2 text-xs text-sr-muted">
-            <Globe className="size-3.5" />
-            <span>{lang === "zh" ? "中文" : "English"}</span>
+
+          {/* 语言切换 — segmented control 双按钮，与 Navbar 风格一致
+              两个语言都明确可见 + 可点击；active 高亮黑底白字 */}
+          <div
+            role="group"
+            aria-label={lang === "zh" ? "切换语言" : "Switch language"}
+            className="mt-5 inline-flex items-center gap-1 rounded-lg border border-sr-line-2 bg-white/70 p-1 shadow-sm backdrop-blur-sm"
+          >
+            <Globe
+              aria-hidden
+              className="ml-1.5 mr-0.5 size-3.5 shrink-0 text-sr-muted"
+            />
+            <button
+              type="button"
+              onClick={() => setLang("zh")}
+              aria-pressed={lang === "zh"}
+              className={cn(
+                "rounded-md px-3 py-1 text-xs font-medium transition-colors",
+                lang === "zh"
+                  ? "bg-sr-text text-white shadow-sm"
+                  : "text-sr-text-2 hover:text-sr-text",
+              )}
+            >
+              中文
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang("en")}
+              aria-pressed={lang === "en"}
+              className={cn(
+                "rounded-md px-3 py-1 text-xs font-medium transition-colors",
+                lang === "en"
+                  ? "bg-sr-text text-white shadow-sm"
+                  : "text-sr-text-2 hover:text-sr-text",
+              )}
+            >
+              English
+            </button>
           </div>
         </div>
 
